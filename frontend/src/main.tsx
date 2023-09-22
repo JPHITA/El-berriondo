@@ -1,10 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+// rutas //////////////////////////////////////////////////////
+import { routes as ventasRoutes } from './Ventas/routes.tsx'
+
+const ROUTES = createBrowserRouter([
+  ...ventasRoutes,
+  // ...rutas de los demas modulos
+])
+//////////////////////////////////////////////////////////////
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={ROUTES}/>
   </React.StrictMode>,
 )
