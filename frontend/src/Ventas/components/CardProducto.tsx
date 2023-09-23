@@ -1,21 +1,27 @@
 import { Card } from "react-bootstrap";
 
 interface CardProductoProps {
+    idProducto: number;
     urlImagen: string;
+    title: string;
+    text: string;
+    precio: Number;
 }
 
 export const CardProducto = (props: CardProductoProps) => {
 
     return (
-        <Card>
-            <Card.Img variant="top" className="img-fluid" src={props.urlImagen} />
-            <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </Card.Text>
-            </Card.Body>
+        <Card border="dark" className="mb-3" style={{ height: "400px" }}>
+            <a href={"#" + props.idProducto} style={{ textDecoration: "none", color: "inherit"}}>
+                <Card.Img variant="top" className="img-fluid" src={props.urlImagen} style={{ height: "200px" }} />
+                <Card.Body>
+                    <Card.Title>{props.title}</Card.Title>
+                    <Card.Subtitle>
+                        {props.precio.toLocaleString("en-US", { style: "currency", currency: "USD" })}
+                    </Card.Subtitle>
+                    <Card.Text>{props.text}</Card.Text>
+                </Card.Body>
+            </a>
         </Card>
     )
 }

@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import img from "../../assets/Ventas/don berriondo.jpg";
 export const Header = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-body-tertiary mb-4">
       <Container>
         <Navbar.Brand href="/">
           <img src={img} className='d-inline-block align-center'/>
