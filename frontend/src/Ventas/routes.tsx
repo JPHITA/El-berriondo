@@ -1,9 +1,11 @@
 import { RouteObject } from "react-router-dom";
 
+import { PrincipalPage } from "./PrincipalPage.tsx";
+
 export const routes: RouteObject[] = [
     {
         path: '/',
-        element: <h1>Inicio</h1>
+        element: <PrincipalPage/>
     },
     {
         path: '/ventas',
