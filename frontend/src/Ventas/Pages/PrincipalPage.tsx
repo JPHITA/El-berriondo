@@ -6,6 +6,7 @@ import { ModalRecomendacion }  from "../components/ModalRecomendacion.js";
 
 import { RandomProducto } from "./../Utils.ts";
 
+
 export const PrincipalPage = () => {
     const nCarruseles = 2;      // numero de carruseles
     const nCartas = 12;         // cada carrusel tendra esta cantidad de cartas

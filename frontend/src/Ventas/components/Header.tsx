@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Image from 'react-bootstrap/Image';
 
 import img from "../../assets/Ventas/don berriondo.jpg";
 export const Header = () => {
@@ -9,7 +10,7 @@ export const Header = () => {
     <Navbar expand="lg" className="bg-body-tertiary mb-4">
       <Container>
         <Navbar.Brand href="/">
-          <img src={img} className='d-inline-block align-center'/>
+          <Image className='me-3' src={img} rounded/>
           El berriondo
         </Navbar.Brand>
 
