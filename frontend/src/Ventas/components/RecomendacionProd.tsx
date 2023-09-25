@@ -5,18 +5,19 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { RandomProducto } from "./../Utils.ts";
+import { RandomProducto, GetProducto } from "./../Utils.ts";
 
 interface RecomendacionProdProps {
     height: number;
+    idProducto?: Number;
 }
 
 export const RecomendacionProd = (props: RecomendacionProdProps) => {
 
     const navigate = useNavigate();
 
-    const [producto, setProducto] = useState(RandomProducto());
-
+    const [producto, setProducto] = useState(props.idProducto? GetProducto(props.idProducto) : RandomProducto());
+    
     return (
         <div
         style={
@@ -28,7 +29,7 @@ export const RecomendacionProd = (props: RecomendacionProdProps) => {
                 cursor: 'pointer',
             }}
             onClick={() => {
-                navigate(`/Ventas/Detalle/${producto.id}`);
+                navigate(`/Ventas/Detalle/${producto.id}`, { replace: true });
                 setProducto(RandomProducto());
             }}
         >
