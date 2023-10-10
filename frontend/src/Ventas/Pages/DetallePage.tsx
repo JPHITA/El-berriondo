@@ -16,19 +16,16 @@ import Image from 'react-bootstrap/Image';
 
 import "./../../assets/Ventas/css/DetallePage.css"
 
-// TODO
-// cambiar const producto por un state
-
 export const DetallePage = () => {
     const { idProducto } = useParams(); // id del producto a mostrar
     const location = useLocation();
 
     const [cant_a_llevar, setCant_a_llevar] = useState<number>(1); // estado para la cantidad a llevar
-
-    // cambiar por un state
-    const producto = GetProducto(parseInt(idProducto!))!;
+    const [producto, setProducto] = useState( GetProducto(parseInt(idProducto!)) ); // estado para el producto a mostrar
     
-    useEffect(() => {
+    useEffect(function(){
+        setProducto( GetProducto(parseInt(idProducto!)) );
+
         if (isInCarrito(producto.id)) {
             setCant_a_llevar(getCarrito()[producto.id]);
         } else {
@@ -36,13 +33,11 @@ export const DetallePage = () => {
         }
     }, [location]);
 
-    //  funciones para manejar la vista /////////////////////////////
     function handleAgregarAlCarrito() {
         if (!isInCarrito(producto.id)) {
             addProductoCarrito(producto.id, cant_a_llevar);
         }
     }
-    /////////////////////////////////////////////////////////////////
 
     return (
         <>
