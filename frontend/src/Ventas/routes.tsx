@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 
 import { PrincipalPage } from "./Pages/PrincipalPage.tsx";
 import { DetallePage } from './Pages/DetallePage.tsx';
+import { CarritoPage } from './Pages/CarritoPage.tsx';
 
 export const routes: RouteObject[] = [
     {
@@ -14,6 +15,10 @@ export const routes: RouteObject[] = [
             {
                 path: 'Detalle/:idProducto',
                 element: <DetallePage/>
+            },
+            {
+                path: 'Carrito',
+                element: <CarritoPage/>
             }
         ]
     }
