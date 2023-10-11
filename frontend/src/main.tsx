@@ -16,6 +16,6 @@ const ROUTES = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RecuperarCuenta/>
+    <PanLogin/>
   </React.StrictMode>,
 )
