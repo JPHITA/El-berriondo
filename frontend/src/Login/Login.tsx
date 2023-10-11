@@ -47,6 +47,10 @@ function PanLogin(){
                     <div className={Action==="Iniciar sesion"?"submit gray":"submit"} onClick={()=>{setAction("Registrarse")}}>Registrarse</div>
                     <div className={Action==="Registrarse"?"submit gray":"submit"} onClick={()=>{setAction("Iniciar sesion")}}>Iniciar sesion</div>
                 </div>
+                <div className="submit-container">
+                    {Action==="Registrarse"?<div className={Action==="Iniciar sesion"?"submit gray":"submitRedirigir"} onClick={()=>{setAction("Registrarse")}}>Registrarse</div>:
+                        <div className={Action==="Registrarse"?"submit gray":"submitRedirigir"} onClick={()=>{setAction("Iniciar sesion")}}>Iniciar sesion</div>}
+                </div>
             </div>
         </>
 
