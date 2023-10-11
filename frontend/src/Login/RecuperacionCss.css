@@ -5,6 +5,12 @@ body{
     background-size: 100% 100%;
 }
 
+h2{
+    font-size: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #797979;
+}
 .Container{
     display: flex;
     flex-direction: column;
@@ -31,7 +37,7 @@ body{
 }
 
 .Underline{
-    width: 280px;
+    width: 380px;
     height: 6px;
     background: #797979;
     border-radius: 9px;
