@@ -1,6 +1,6 @@
 body{
     height: 100vh;
-    background: linear-gradient(180deg,#797979 40%, #FFFFFF 210%);
+    background-image: url(Backgroundberriondo.jpg);
 }
 .Container{
     display: flex;
