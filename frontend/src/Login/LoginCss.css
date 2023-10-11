@@ -1,6 +1,8 @@
 body{
     height: 100vh;
     background-image: url("https://raw.githubusercontent.com/JPHITA/El-berriondo/David/frontend/src/assets/Backgroungberriondo.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 .Container{
     display: flex;
