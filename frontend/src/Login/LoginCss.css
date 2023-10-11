@@ -1,0 +1,101 @@
+body{
+    height: 100vh;
+    background: linear-gradient(180deg,#797979 40%, #FFFFFF 210%);
+}
+.Container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 200px;
+    width: 700px;
+    background: #FFFFFF;
+    padding-bottom: 30px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.Text{
+    font-size: 48px;
+    font-weight: 700;
+    color: #797979;
+}
+
+.Underline{
+    width: 280px;
+    height: 6px;
+    background: #797979;
+    border-radius: 9px;
+}
+
+.Inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.Input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 480px;
+    height: 50px;
+    background: #eaeaea;
+    border-radius: 6px;
+}
+
+.Input input{
+    height: 50px;
+    width: 480px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgba(121,121,121,1.000);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.olvideContraseña{
+    padding-left: 62px;
+    margin-top: 27px;
+    color: #797979;
+    font-size: 18px;
+    margin: 20px 220px;
+}
+
+.olvideContraseña span{
+    color: #797979;
+    cursor: pointer;
+}
+
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #FFFFFF;
+    background: #797979;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.gray{
+    background: #eaeaea;
+    color: #676767;
+}
