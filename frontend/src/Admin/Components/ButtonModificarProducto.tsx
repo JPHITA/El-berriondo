@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import MenuModificacion from './MenuModificacionProducto'
 
 import { useState } from 'react';
 
@@ -12,7 +11,7 @@ export const ButtonModificarProducto = () => {
 
   
     return (
-      <>
+<>
       <Button variant="primary" onClick={handleShow}>
         Modificar producto
       </Button>
@@ -24,23 +23,49 @@ export const ButtonModificarProducto = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <MenuModificacion />
+              <Form.Label>ID del producto</Form.Label>
+                <Form.Control
+                  type="id"
+                  placeholder="123456"
+                  autoFocus
+                />
+              <p></p>
+              <Form.Label><Button variant="secondary" size="sm" onClick={() => 
+                alert('Se buscan los datos del producto con el ID ')
+                }>
+                Buscar
+                </Button>{' '}
+              </Form.Label>
+              <p></p>
+              <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="id"
+                  placeholder="Sombrero paisa"
+                  autoFocus
+                />
+              <p></p>
+              <Form.Label>Precio</Form.Label>
+                <Form.Control
+                  type="id"
+                  placeholder="470708 $"
+                  autoFocus
+                />
+              <Form.Label>Stock</Form.Label>
+                <Form.Control
+                  type="id"
+                  placeholder="6 "
+                  autoFocus
+                />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-            </Form.Group>
+            
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cerrar
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            Guardar cambios
           </Button>
         </Modal.Footer>
       </Modal>

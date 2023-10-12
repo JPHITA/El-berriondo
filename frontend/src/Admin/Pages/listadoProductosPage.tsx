@@ -1,7 +1,7 @@
 import {Container, Row, Col, Table }from 'react-bootstrap';
 import { MockProductos } from '../Mocks/registroProductos';
-import { ButtonModificarProducto } from '../Components/ButtonModificarProducto';
-
+import { ButtonModificarProducto } from '../Components/ButtonModificarProducto.tsx';
+import { ButtonRegistrarProducto } from '../Components/ButtonRegistrarProducto.tsx';
 
 
 export const ListadoProductosPage = () => {
@@ -9,6 +9,10 @@ export const ListadoProductosPage = () => {
     return (
         <Container fluid>
             <h1 style={{textAlign: "center"}}>Listado de Productos</h1>
+            <Col><ButtonModificarProducto/></Col>
+            <p></p>
+            <Col><ButtonRegistrarProducto/></Col>
+            <p></p>
             <Row>
                 <Col style={{display:'flex', justifyContent:'left'}}>
                     <Table responsive bordered striped='columns'  variant='dark'>  
@@ -34,8 +38,8 @@ export const ListadoProductosPage = () => {
                     </tbody>
                     </Table>
                     </Col>
-                    <Col style={{justifyContent:'right'}}><ButtonModificarProducto /></Col>
             </Row>
+
 
         </Container>
   );
