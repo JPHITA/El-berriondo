@@ -52,7 +52,7 @@ function PanLogin(){
                     </div>
                     }
                 </div>
-                {Action==="Registrarse"?<div></div>:<div className="olvideContraseña" onClick={NavRecCuenta}>Olvide mi contraseña</div>}
+                {Action==="Registrarse"?<div></div>:<div className="olvideContraseña" onClick={NavRecCuenta}>Olvidé mi contraseña</div>}
                 <div className="submit-container">
                     <div className={Action==="Iniciar sesion"?"submit gray":"submit"} onClick={()=>{setAction("Registrarse")}}>Registrarse</div>
                     <div className={Action==="Registrarse"?"submit gray":"submit"} onClick={()=>{setAction("Iniciar sesion")}}>Iniciar sesion</div>
