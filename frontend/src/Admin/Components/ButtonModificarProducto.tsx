@@ -1,5 +1,8 @@
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import MenuModificacion from './MenuModificacionProducto'
+
 import { useState } from 'react';
 
 export const ButtonModificarProducto = () => {
@@ -7,26 +10,40 @@ export const ButtonModificarProducto = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
-        Modificar
-        </Button>
+      <Button variant="primary" onClick={handleShow}>
+        Modificar producto
+      </Button>
 
-        <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>MODIFICAR PRODUCTO : </Modal.Title>
+          <Modal.Title>Modificación de producto</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Cuerpo de Modal</Modal.Body>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <MenuModificacion />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Example textarea</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cerrar
+            Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Guardar cambios
+            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
-      </>      
+    </>
     )
   }
