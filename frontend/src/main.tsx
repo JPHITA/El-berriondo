@@ -5,9 +5,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // rutas //////////////////////////////////////////////////////
 import { routes as ventasRoutes } from './Ventas/routes.tsx'
-
+import { routes as adminRoutes } from './Admin/adminRoutes.tsx'
 const ROUTES = createBrowserRouter([
   ...ventasRoutes,
+  ...adminRoutes
   // ...rutas de los demas modulos
 ])
 //////////////////////////////////////////////////////////////
