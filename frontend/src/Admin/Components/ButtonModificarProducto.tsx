@@ -15,7 +15,7 @@ export const ButtonModificarProducto = () => {
 
         <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Cabeza de Modal</Modal.Title>
+          <Modal.Title>MODIFICAR PRODUCTO : </Modal.Title>
         </Modal.Header>
         <Modal.Body>Cuerpo de Modal</Modal.Body>
         <Modal.Footer>
