@@ -1,9 +1,9 @@
 import './RecuperacionCss.css'
 import {useNavigate} from "react-router-dom";
-function RecuperarCuenta(){
-    const navigate=useNavigate()
-    const NavIntCod=()=>{
-        navigate('/Introducircodigo')
+ export default function NuevaContraseña(){
+    const navigate =useNavigate();
+    const NavPanLogin=() =>{
+        navigate('/Login')
     }
 
     return(
@@ -13,20 +13,22 @@ function RecuperarCuenta(){
                     <div className="Text">Recuperar Cuenta</div>
                     <div className="Underline"></div>
                 </div>
-                <h2> Introduce la direccion de correo electronico que usaste para registrarte, te enviaremos un codigo de recuperacion</h2>
+                <h2> Introduce una nueva contraseña</h2>
                 <div className="Inputs">
                     <div className="Input">
                         <img src="" alt=""/>
-                        <input type="email" placeholder="Correo electronico"/>
+                        <input type="password" placeholder="Contraseña"/>
+                    </div>
+                    <div className="Input">
+                        <img src="" alt=""/>
+                        <input type="password" placeholder="Confirmar Contraseña"/>
                     </div>
                 </div>
                 <div className="submit-container">
-                    <div className="submit" onClick={NavIntCod}> Enviar codigo</div>
+                    <div className="submit" onClick={NavPanLogin}> Guardar y volver a inicio</div>
                 </div>
             </div>
         </>
 
     )
 }
-
-export default RecuperarCuenta;

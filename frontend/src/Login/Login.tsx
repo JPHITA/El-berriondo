@@ -1,6 +1,17 @@
 import './LoginCss.css'
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 function PanLogin(){
+    const navigate =useNavigate();
+    const NavRecCuenta= () => {
+        navigate('/Recuperarcuenta')
+    }
+    const NavRegistro=()=>{
+        navigate('/Finregistro')
+    }
+    const NavPagPrincipal=()=>{
+        navigate('/')
+    }
 
     const [Action,setAction]=useState("Registrarse");
     return(
@@ -41,15 +52,15 @@ function PanLogin(){
                     </div>
                     }
                 </div>
-                {Action==="Registrarse"?<div></div>:<div className="olvideContraseña"><span>Olvidé mi contraseña</span></div>
-                }
+                {Action==="Registrarse"?<div></div>:<div className="olvideContraseña" onClick={NavRecCuenta}>Olvide mi contraseña</div>}
                 <div className="submit-container">
                     <div className={Action==="Iniciar sesion"?"submit gray":"submit"} onClick={()=>{setAction("Registrarse")}}>Registrarse</div>
                     <div className={Action==="Registrarse"?"submit gray":"submit"} onClick={()=>{setAction("Iniciar sesion")}}>Iniciar sesion</div>
                 </div>
+
                 <div className="submit-container">
-                    {Action==="Registrarse"?<div className={Action==="Iniciar sesion"?"submit gray":"submitRedirigir"} onClick={()=>{setAction("Registrarse")}}>Registrarse</div>:
-                        <div className={Action==="Registrarse"?"submit gray":"submitRedirigir"} onClick={()=>{setAction("Iniciar sesion")}}>Iniciar sesion</div>}
+                    {Action==="Iniciar sesion"?<div></div>:<div className="submitRedirigir" onClick={NavRegistro}>Registrarse</div>}
+                    {Action==="Registrarse"?<div></div>:<div className="submitRedirigir" onClick={NavPagPrincipal}>Iniciar sesion</div>}
                 </div>
             </div>
         </>
