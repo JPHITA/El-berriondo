@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import PanLogin from './Login/Login.tsx';
-import RecuperarCuenta from './Login/RecuperacionCuenta.tsx';
+
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
@@ -16,6 +15,6 @@ const ROUTES = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <PanLogin/>
+    <RouterProvider router={ROUTES}/>
   </React.StrictMode>,
 )

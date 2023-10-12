@@ -1,17 +1,14 @@
 import { RouteObject } from "react-router-dom";
+import PanLogin from "../Login/Login.tsx";
+import RecuperarCuenta from "../Login/RecuperacionCuenta.tsx";
 
 export const routes: RouteObject[] = [
     {
-        path: '/',
-        element: <h1>Inicio</h1>
+        path: '/login',
+        element: <PanLogin/>
     },
     {
-        path: '/ventas',
-        children: [
-            {
-                path: 'detalle',
-                element: <h1>detalle de ventas</h1>
-            }
-        ]
+        path: '/Recuperarcuenta',
+        element: <RecuperarCuenta/>
     }
 ]
