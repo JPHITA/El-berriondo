@@ -21,10 +21,10 @@ export const DetallePage = () => {
     const location = useLocation();
 
     const [cant_a_llevar, setCant_a_llevar] = useState<number>(1); // estado para la cantidad a llevar
-    const [producto, setProducto] = useState( GetProducto(parseInt(idProducto!)) ); // estado para el producto a mostrar
-    
-    useEffect(function(){
-        setProducto( GetProducto(parseInt(idProducto!)) );
+    const [producto, setProducto] = useState(GetProducto(parseInt(idProducto!))); // estado para el producto a mostrar
+
+    useEffect(function () {
+        setProducto(GetProducto(parseInt(idProducto!)));
 
         if (isInCarrito(producto.id)) {
             setCant_a_llevar(getCarrito()[producto.id]);
@@ -44,104 +44,112 @@ export const DetallePage = () => {
             <Header />
 
             <Container>
-                    {/* solo se muestra para pantallas sm */}
-                    <Row className='no-mostrar-en-md'>
-                        <Col>
-                            <h2 style={{ color: "gray" }}>{producto.nombre}</h2>
-                        </Col>
-                    </Row>
+                {/* solo se muestra para pantallas sm */}
+                <Row className='no-mostrar-en-md'>
+                    <Col>
+                        <h2 style={{ color: "gray" }}>{producto.nombre}</h2>
+                    </Col>
+                </Row>
 
-                    <Row>
+                <Row>
 
-                        <Col xs={12} md={8}>
-                            <Image className='img-principal' src={producto.urlimg} fluid thumbnail />
-                        </Col>
+                    <Col xs={12} md={8}> <Image className='img-principal' src={producto.urlimg} fluid thumbnail />
+                    </Col>
+                    <Col xs={12} md={4} className='text-md-center'>
 
-                        <Col xs={12} md={4} className='text-md-center'>
+                        {
+                            producto.stock > 0 ?
+                                <>
+                                    <Row className="mt-md-5">
+                                        <Col>
+                                            <h2>
+                                                {producto.precio.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 })}
+                                            </h2>
+                                        </Col>
+                                    </Row>
 
-                            {
-                                producto.stock > 0 ?
-                                    <>
-                                        <Row className="mt-md-5">
-                                            <Col>
-                                                <h2>
-                                                    {producto.precio.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0 })}
-                                                </h2>
-                                            </Col>
-                                        </Row>
+                                    <Row className="mt-md-5">
+                                        <Col>
+                                            <h5 style={{ color: "gray" }}>
+                                                Disponibles: {producto.stock}
+                                            </h5>
+                                        </Col>
+                                    </Row>
 
-                                        <Row className="mt-md-5">
-                                            <Col>
-                                                <h5 style={{ color: "gray" }}>
-                                                    Disponibles: {producto.stock}
-                                                </h5>
-                                            </Col>
-                                        </Row>
-
-                                        <Row className="mt-md-3 justify-content-center">
-                                            <Col md={8}>
-                                                <SetterCantidadProd
-                                                    producto={producto}
-                                                    cantActual={cant_a_llevar}
-                                                    setCantidad={setCant_a_llevar}
-                                                />
-                                            </Col>
-                                        </Row>
-
-                                        <ButtonAgregarProd
-                                            idProducto={producto.id}
-                                            handleAgregarAlCarrito={handleAgregarAlCarrito}
-                                        />
-                                    </>
-
-                                    : // else
-                                    <>
-                                        <Row className='text-center'>
-                                            <h3 style={{ color: "red" }}>Producto no disponible</h3>
-                                        </Row>
-
-                                        <Row>
-                                            <InfoProducto
-                                                className="no-mostrar-en-md"
-                                                nombre={producto.nombre}
-                                                descripcion={producto.descripcion_larga}
+                                    <Row className="mt-md-3 justify-content-center">
+                                        <Col md={8}>
+                                            <SetterCantidadProd
+                                                producto={producto}
+                                                cantActual={cant_a_llevar}
+                                                setCantidad={setCant_a_llevar}
                                             />
-                                        </Row>
+                                        </Col>
+                                    </Row>
 
-                                        <Row>
-                                            <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
-                                        </Row>
+                                    <ButtonAgregarProd
+                                        idProducto={producto.id}
+                                        handleAgregarAlCarrito={handleAgregarAlCarrito}
+                                    />
 
-                                        <MultiRecomendacionProd height={138} />
-                                    </>
-                            }
+                                    <Row>
+                                        <InfoProducto
+                                            className="no-mostrar-en-md"
+                                            xs={12} md={8}
+                                            nombre={producto.nombre}
+                                            descripcion={producto.descripcion_larga}
+                                        />
+                                    </Row>
+                                </>
 
-                        </Col>
+                                : // else
+                                <>
+                                    <Row className='text-center'>
+                                        <h3 style={{ color: "red" }}>Producto no disponible</h3>
+                                    </Row>
 
-                    </Row>
+                                    <Row>
+                                        <InfoProducto
+                                            className="no-mostrar-en-md"
+                                            xs={12} md={8}
+                                            nombre={producto.nombre}
+                                            descripcion={producto.descripcion_larga}
+                                        />
+                                    </Row>
 
-                    <Row className='mt-md-4 mt-3'>
-                        <InfoProducto
-                            className="no-mostrar-en-sm"
-                            nombre={producto.nombre}
-                            descripcion={producto.descripcion_larga}
-                        />
-
-                        <Col xs={12} md={4}>
-
-                            {
-                                producto.stock > 0 ?
-                                    <>
+                                    <Row>
                                         <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
-                                        <RecomendacionProd height={150} />
-                                    </>
+                                    </Row>
 
-                                    : // else
-                                    <></>
-                            }
+                                    <MultiRecomendacionProd height={138} />
+                                </>
+                        }
 
-                        </Col>
-                    </Row>
+                    </Col>
+
+                </Row>
+
+                <Row className='mt-md-4 mt-3'>
+                    <InfoProducto
+                        className="no-mostrar-en-sm"
+                        xs={12} md={8}
+                        nombre={producto.nombre}
+                        descripcion={producto.descripcion_larga}
+                    />
+                    <Col xs={12} md={4}>
+
+                        {
+                            producto.stock > 0 ?
+                                <>
+                                    <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
+                                    <RecomendacionProd height={150} />
+                                </>
+
+                                : // else
+                                <></>
+                        }
+
+                    </Col>
+                </Row>
             </Container>
         </>
     )
