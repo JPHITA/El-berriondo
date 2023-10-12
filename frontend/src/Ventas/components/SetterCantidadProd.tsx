@@ -6,6 +6,8 @@ interface SetterCantidadProps {
     producto: Producto;
     cantActual: number;
     setCantidad: (cant: number) => void;
+    handleDisminuir?: () => void;
+    handleAumentar?: () => void;
 }
 
 export const SetterCantidadProd = (props: SetterCantidadProps) => {
@@ -14,12 +16,16 @@ export const SetterCantidadProd = (props: SetterCantidadProps) => {
         if( !isInCarrito(props.producto.id) ){
             props.setCantidad(Math.max(1, props.cantActual - 1));
         }
+
+        if (props.handleDisminuir) props.handleDisminuir();
     }
 
     function handleAumentarCantidad() {
         if( !isInCarrito(props.producto.id) ){
             props.setCantidad(Math.min(props.producto.stock, props.cantActual + 1));
         }
+
+        if (props.handleAumentar) props.handleAumentar();
     }
 
     return (
@@ -28,7 +34,7 @@ export const SetterCantidadProd = (props: SetterCantidadProps) => {
                 <span role="button" className="input-group-text" onClick={handleDisminuirCantidad}>-</span>
 
                 <input
-                    value={`llevar ${props.cantActual}`}
+                    value={props.cantActual}
                     type="text"
                     className="form-control text-center"
                     disabled
