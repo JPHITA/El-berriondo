@@ -2,14 +2,28 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+import { Producto, MockProductos } from './../Mocks/registroProductos';
+
 import { useState } from 'react';
 
 export const ButtonModificarProducto = () => {
+  const [idBuscar, setIdBuscar] = useState('');
+  const [productoBuscar, setProductoBuscar] = useState<Producto | null>(null);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  
+  function buscarProducto() {
+    const productoEncontrado = MockProductos.find((producto) => producto.id === parseInt(idBuscar));
+
+    if (productoEncontrado) {
+      setProductoBuscar(productoEncontrado);
+    } else {
+      alert('No se encontró el producto');
+    }
+  }
+
     return (
 <>
       <Button variant="primary" onClick={handleShow}>
@@ -28,11 +42,14 @@ export const ButtonModificarProducto = () => {
                   type="id"
                   placeholder="123456"
                   autoFocus
+                  onChange={(e) => setIdBuscar(e.target.value)}
                 />
               <p></p>
-              <Form.Label><Button variant="secondary" size="sm" onClick={() => 
+              <Form.Label><Button variant="secondary" size="sm" onClick={() => {
                 alert('Se buscan los datos del producto con el ID ')
-                }>
+
+                buscarProducto()
+                }}>
                 Buscar
                 </Button>{' '}
               </Form.Label>
@@ -41,6 +58,7 @@ export const ButtonModificarProducto = () => {
                 <Form.Control
                   type="id"
                   placeholder="Sombrero paisa"
+                  value={productoBuscar?.nombre || ''}
                   autoFocus
                 />
               <p></p>
