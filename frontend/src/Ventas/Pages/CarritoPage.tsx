@@ -20,9 +20,9 @@ export const CarritoPage = () => {
 
     const [carrito, setCarrito] = useState(getCarrito());
 
-    useEffect(function(){
+    // useEffect(function(){
         
-    }, [carrito]);
+    // }, [carrito]);
 
     return (
         <>
@@ -84,11 +84,13 @@ export const CarritoPage = () => {
 
                             <Col md={2} sm={12} className="text-center">
                                 <SetterCantidadProd
-                                    producto={producto}
                                     cantActual={cantidad}
-                                    setCantidad={(cant) => {
-                                        console.log("setCantidad", cant);
-                                        editProductoCarrito(producto.id, cant);
+                                    handleDisminuir={() => {
+                                        editProductoCarrito(producto.id, Math.max(1, cantidad - 1));
+                                        setCarrito(getCarrito());
+                                    }}
+                                    handleAumentar={() => {
+                                        editProductoCarrito(producto.id, Math.min(producto.stock, cantidad + 1));
                                         setCarrito(getCarrito());
                                     }}
                                 />

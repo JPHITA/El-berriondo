@@ -39,6 +39,18 @@ export const DetallePage = () => {
         }
     }
 
+    function handleDisminuir(){
+        if( !isInCarrito(producto.id) ){
+            setCant_a_llevar(Math.max(1, cant_a_llevar - 1));
+        }
+    }
+
+    function handleAumentar(){
+        if( !isInCarrito(producto.id) ){
+            setCant_a_llevar(Math.min(producto.stock, cant_a_llevar + 1));
+        }
+    }
+
     return (
         <>
             <Header />
@@ -79,9 +91,9 @@ export const DetallePage = () => {
                                     <Row className="mt-md-3 justify-content-center">
                                         <Col md={8}>
                                             <SetterCantidadProd
-                                                producto={producto}
                                                 cantActual={cant_a_llevar}
-                                                setCantidad={setCant_a_llevar}
+                                                handleDisminuir={handleDisminuir}
+                                                handleAumentar={handleAumentar}
                                             />
                                         </Col>
                                     </Row>

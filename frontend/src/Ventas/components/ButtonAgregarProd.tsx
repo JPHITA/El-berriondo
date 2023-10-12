@@ -37,7 +37,7 @@ export const ButtonAgregarProd = (props: ButtonAgregarProdProps) => {
                             variant={infoBotonCarrito.color}
                             onClick={
                                 () => {
-                                    setInfoBotonCarrito(agregar);
+                                    setInfoBotonCarrito(agregado);
                                     props.handleAgregarAlCarrito();
                                 }
                             }
