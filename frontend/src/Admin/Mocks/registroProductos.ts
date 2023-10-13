@@ -6,8 +6,8 @@ export interface Producto {
     precio: number;
     stock: number;
     urlimg: string;
-
 }
+
 
 export const MockProductos: Producto[] = [
     {

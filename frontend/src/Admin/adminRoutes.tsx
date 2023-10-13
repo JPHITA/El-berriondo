@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import { ListadoProductosPage } from "./Pages/listadoProductosPage.tsx";
-
+import { ReporteVentasPage } from "./Pages/reporteVentasPage.tsx";
 
 export const routes: RouteObject[] = [
     {
@@ -8,11 +8,7 @@ export const routes: RouteObject[] = [
         element: <ListadoProductosPage/>
     },
     {
-        path: '/registroProductos',
-        element: <h1>Registro de productos</h1>
-    },
-    {
         path: '/reporteVentas',
-        element: <h1>Reporte de ventas</h1>
+        element: <ReporteVentasPage/>
     }
 ]
