@@ -9,7 +9,7 @@ import { InfoProducto } from "./../components/InfoProducto.tsx";
 import { SetterCantidadProd } from "./../components/SetterCantidadProd.tsx";
 import { RecomendacionProd } from "./../components/RecomendacionProd.tsx";
 
-import { getCarrito, editProductoCarrito, removeProductoCarrito, setCarrito as setCarritoMemory } from "./../../services/carrito.ts";
+import { getCarrito, editProductoCarrito, removeProductoCarrito, lengthCarrito, setCarrito as setCarritoMemory } from "./../../services/carrito.ts";
 import { GetProducto } from "./../Utils.ts";
 
 export const CarritoPage = () => {
@@ -36,7 +36,7 @@ export const CarritoPage = () => {
 
     return (
         <>
-            <Header />
+            <Header lengthCarrito={lengthCarrito()}/>
             <Container>
 
                 <Row className="justify-content-around mb-3">

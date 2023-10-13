@@ -7,7 +7,12 @@ import Image from 'react-bootstrap/Image';
 import { useNavigate } from "react-router-dom";
 
 import img from "../../assets/Ventas/don berriondo.jpg";
-export const Header = () => {
+
+interface HeaderProps {
+  lengthCarrito?: number;
+}
+
+export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -32,7 +37,7 @@ export const Header = () => {
                   </svg>
 
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    99
+                    {props.lengthCarrito}
                     <span className="visually-hidden">unread messages</span>
                   </span>
                 </button>

@@ -4,8 +4,9 @@ import { Header } from "../components/Header.js";
 import { CardProducto } from "../components/CardProducto.js";
 import { ModalRecomendacion }  from "../components/ModalRecomendacion.js";
 
-import { RandomProducto } from "./../Utils.ts";
+import { lengthCarrito } from "./../../services/carrito.ts";
 
+import { RandomProducto } from "./../Utils.ts";
 
 export const PrincipalPage = () => {
     const nCarruseles = 2;      // numero de carruseles
@@ -14,7 +15,7 @@ export const PrincipalPage = () => {
 
     return (
         <>
-            <Header />
+            <Header lengthCarrito={lengthCarrito()}/>
 
             <Container>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { Header } from '../components/Header';
@@ -9,7 +9,7 @@ import { InfoProducto } from "../components/InfoProducto.tsx";
 import { ButtonAgregarProd } from "../components/ButtonAgregarProd.tsx";
 
 import { GetProducto } from "./../Utils.ts";
-import { addProductoCarrito, isInCarrito, getCarrito } from "./../../services/carrito.ts";
+import { addProductoCarrito, isInCarrito, getCarrito, lengthCarrito } from "./../../services/carrito.ts";
 
 import { Col, Container, Row } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
@@ -19,6 +19,7 @@ import "./../../assets/Ventas/css/DetallePage.css"
 export const DetallePage = () => {
     const { idProducto } = useParams(); // id del producto a mostrar
     const location = useLocation();
+    const [_, forceUpdate] = useReducer(x => x + 1, 0);
     
     const [cant_a_llevar, setCant_a_llevar] = useState<number>(1); // estado para la cantidad a llevar
     const [producto, setProducto] = useState(GetProducto(idProducto!)); // estado para el producto a mostrar
@@ -39,6 +40,7 @@ export const DetallePage = () => {
     function handleAgregarAlCarrito() {
         if (!isInCarrito(producto.id)) {
             addProductoCarrito(producto.id, cant_a_llevar);
+            forceUpdate();
         }
     }
 
@@ -56,7 +58,7 @@ export const DetallePage = () => {
 
     return (
         <>
-            <Header />
+            <Header lengthCarrito={lengthCarrito()}/>
 
             <Container>
                 {/* solo se muestra para pantallas sm */}
