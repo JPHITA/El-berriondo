@@ -19,3 +19,5 @@ Se abre una consola en el directorio `frontend` y se ejecuta los comandos
 npm install
 npm run dev
 ```
+
+**por defecto el proyecto corre en el puerto 5173**
