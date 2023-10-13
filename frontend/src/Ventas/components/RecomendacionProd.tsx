@@ -9,7 +9,7 @@ import { RandomProducto, GetProducto } from "./../Utils.ts";
 
 interface RecomendacionProdProps {
     height: number;
-    idProducto?: Number;
+    idProducto?: number;
 }
 
 export const RecomendacionProd = (props: RecomendacionProdProps) => {
@@ -20,18 +20,18 @@ export const RecomendacionProd = (props: RecomendacionProdProps) => {
     
     return (
         <div
-        style={
-            {
-                height: `${props.height}px`,
-                width: '100%',
-                border: '1px solid gray',
-                borderRadius: '5px',
-                cursor: 'pointer',
-            }}
-            onClick={() => {
-                navigate(`/Ventas/Detalle/${producto.id}`, { replace: true });
-                setProducto(RandomProducto());
-            }}
+            style={
+                {
+                    height: `${props.height}px`,
+                    width: '100%',
+                    border: '1px solid gray',
+                    borderRadius: '5px',
+                    cursor: 'pointer',
+                }}
+                onClick={() => {
+                    navigate(`/Ventas/Detalle/${producto.id}`);
+                    setProducto(RandomProducto());
+                }}
         >
 
             <Row style={{ height: "70%" }}>
