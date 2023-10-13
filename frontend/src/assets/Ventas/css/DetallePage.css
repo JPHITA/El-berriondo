@@ -1,0 +1,28 @@
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+    .img-principal {
+      width: 100%;
+      height: 300px;
+    }
+
+    .no-mostrar-en-sm{
+      display: none;
+    }
+    
+  }
+  
+  /* For screens larger than 768px */
+  @media (min-width: 768px) {
+    .img-principal {
+      width: 100%;
+      height: 350px;
+    }
+
+    .no-mostrar-en-md{
+      display: none;
+    }
+  }
+
+  .input-group-text{
+    user-select: none;
+  }
