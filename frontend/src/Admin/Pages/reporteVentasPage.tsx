@@ -1,6 +1,7 @@
 import {Container, Row, Col, Table, Dropdown }from 'react-bootstrap';
 import { MockVentas,Venta } from '../Mocks/registroVentas.ts';
 import React from 'react';
+import { Header } from 'c:/Users/User/El-berriondo/frontend/src/Ventas/components/HeaderAdmin.tsx';
 
 export const ReporteVentasPage = () => {
 
@@ -21,6 +22,8 @@ function actualizarEstados(estadoFila:string) {
   }
 
     return (
+        <>
+        <Header/>
         <Container fluid > 
             <h1 style={{textAlign: "center"}}>Registro de Ventas</h1>
             <Row>
@@ -66,6 +69,7 @@ function actualizarEstados(estadoFila:string) {
 
 
         </Container>
+        </>
   );
 };
 

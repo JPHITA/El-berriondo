@@ -2,10 +2,13 @@ import {Container, Row, Col, Table }from 'react-bootstrap';
 import { MockProductos } from '../Mocks/registroProductos';
 import { ButtonModificarProducto } from '../Components/ButtonModificarProducto.tsx';
 import { ButtonRegistrarProducto } from '../Components/ButtonRegistrarProducto.tsx';
+import { Header } from 'c:/Users/User/El-berriondo/frontend/src/Ventas/components/HeaderAdmin.tsx';
 
 export const ListadoProductosPage = () => {
 
     return (
+        <>
+        <Header/>
         <Container fluid > 
             <h1 style={{textAlign: "center"}}>Listado de Productos</h1>
             <Col style={{textAlign: "center"}}><ButtonModificarProducto/></Col>
@@ -41,6 +44,7 @@ export const ListadoProductosPage = () => {
 
 
         </Container>
+        </>
   );
 };
 
