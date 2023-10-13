@@ -1,4 +1,4 @@
-# El-berriondo
+# El berriondo ecommerce
 
 #### Integrantes:
 - Juan Nicolas Piedrahita Salas
