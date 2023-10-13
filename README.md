@@ -13,7 +13,7 @@ este trabajo actualmente esta en desarrollo por lo que se ejecuta en modo de des
 Se abre una consola en el directorio raiz del proyecto y se ejecuta el comando `docker compose up`
 
 #### con npm
-Se abre una consola en el directorio raiz del proyecto y se ejecuta los comandos
+Se abre una consola en el directorio `frontend` y se ejecuta los comandos
 
 ```bash
 npm install
