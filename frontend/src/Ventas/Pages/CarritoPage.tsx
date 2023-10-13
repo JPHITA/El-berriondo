@@ -40,7 +40,7 @@ export const CarritoPage = () => {
             <Container>
 
                 <Row className="justify-content-around mb-3">
-                    <Col lg={8} md={5} sm={12} className="text-inline">
+                    <Col lg={8} md={5} sm={12} className="text-center">
                         <h4>Precio total: ${precioTotal.toLocaleString()}</h4>
 
                     </Col>

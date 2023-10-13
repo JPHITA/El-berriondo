@@ -13,7 +13,7 @@ export const Header = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary mb-4">
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="#" onClick={() => navigate("/")}>
           <Image className='me-3' src={img} rounded />
           El berriondo
         </Navbar.Brand>
