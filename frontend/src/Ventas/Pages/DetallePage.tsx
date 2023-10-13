@@ -19,12 +19,15 @@ import "./../../assets/Ventas/css/DetallePage.css"
 export const DetallePage = () => {
     const { idProducto } = useParams(); // id del producto a mostrar
     const location = useLocation();
-
+    
     const [cant_a_llevar, setCant_a_llevar] = useState<number>(1); // estado para la cantidad a llevar
-    const [producto, setProducto] = useState(GetProducto(parseInt(idProducto!))); // estado para el producto a mostrar
+    const [producto, setProducto] = useState(GetProducto(idProducto!)); // estado para el producto a mostrar
+    
+    // si el producto a mostrar cambia, cambiar el producto a mostrar (pasaba que renderizaba con el valor anterior de producto)
+    if (producto.id != parseInt(idProducto!)) setProducto(GetProducto(idProducto!));
 
     useEffect(function () {
-        setProducto(GetProducto(parseInt(idProducto!)));
+        setProducto(GetProducto(idProducto!));
 
         if (isInCarrito(producto.id)) {
             setCant_a_llevar(getCarrito()[producto.id]);
