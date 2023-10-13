@@ -4,6 +4,8 @@ interface SetterCantidadProps {
     handleAumentar: () => void;
 }
 
+// Componente que muestra un input para establecer la cantidad de un producto
+
 export const SetterCantidadProd = (props: SetterCantidadProps) => {
 
     return (

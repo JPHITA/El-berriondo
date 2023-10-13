@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RandomProducto } from "./../Utils.ts";
 import { Producto } from "../Mocks/Productos.ts";
 
+// Componente que muestra un modal con un producto recomendado en la pagina principal
 
 /*
 1. El modal inicia oculto
@@ -14,7 +15,6 @@ import { Producto } from "../Mocks/Productos.ts";
 */
 
 export const ModalRecomendacion = () => {
-
     const [showModal, setShowModal] = useState(false);                          //state para mostrar el modal
     const [RecProducto, setRecProducto] = useState<Producto>(RandomProducto()); //state para guardar el producto que se recomendara
 
@@ -25,7 +25,7 @@ export const ModalRecomendacion = () => {
             
             setShowModal(true);
 
-        }, 35 * 1000);
+        }, 20 * 1000);
 
         return () => {clearTimeout(timer)};
     }, [showModal]);
@@ -39,7 +39,6 @@ export const ModalRecomendacion = () => {
         show={showModal}
         animation={false}
         onHide={() => {
-            // se cierra el modal y vuelve a ejecutar el useEffect
             setShowModal(false);
             
             //se cambia el producto que se recomendara

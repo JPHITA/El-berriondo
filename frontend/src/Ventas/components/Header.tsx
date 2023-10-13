@@ -12,6 +12,8 @@ interface HeaderProps {
   lengthCarrito?: number;
 }
 
+// Componente que muestra el header de la pagina
+
 export const Header = (props: HeaderProps) => {
   const navigate = useNavigate();
 

@@ -9,9 +9,11 @@ interface CardProductoProps {
     precio: Number;
 }
 
-export const CardProducto = (props: CardProductoProps) => {
+// Componente que muestra un producto en forma de tarjeta en la pagina principal
 
+export const CardProducto = (props: CardProductoProps) => {
     const navigate = useNavigate();
+    
     function handleClick() {
         navigate(`/Ventas/Detalle/${props.idProducto}`);
     }

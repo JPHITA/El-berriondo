@@ -7,6 +7,8 @@ interface MultiRecomendacionProdProps {
     height: number;
 }
 
+// Componente que muestra 4 recomendaciones de productos
+
 export const MultiRecomendacionProd = (props: MultiRecomendacionProdProps) => {
     return (
         <>

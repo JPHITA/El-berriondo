@@ -15,9 +15,10 @@ import { GetProducto } from "./../Utils.ts";
 export const CarritoPage = () => {
     const navigate = useNavigate();
 
-    const [carrito, setCarrito] = useState(getCarrito());
-    const [precioTotal, setPrecioTotal] = useState(0);
+    const [carrito, setCarrito] = useState(getCarrito()); // estado para manejar el carrito
+    const [precioTotal, setPrecioTotal] = useState(0); // estado para manejar el precio total
 
+    // cuando cambia el carrito, calcular el precio total
     useEffect(function(){
         let precioTotal = 0;
         for (const [id, cantidad] of Object.entries(carrito)) {

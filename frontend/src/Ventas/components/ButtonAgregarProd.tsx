@@ -10,14 +10,18 @@ interface ButtonAgregarProdProps {
     handleAgregarAlCarrito: () => void;
 }
 
+// Componente que muestra un boton para agregar un producto al carrito
+
 const agregado = { texto: "Agregado", color: "success", disabled: true };
 const agregar = { texto: "Agregar al carrito", color: "primary", disabled: false };
 
 export const ButtonAgregarProd = (props: ButtonAgregarProdProps) => {
     const location = useLocation();
 
+    // estado para manejar el texto del boton
     const [infoBotonCarrito, setInfoBotonCarrito] = useState(agregar);
 
+    // cuando cambia la ubicacion, cambiar el texto del boton segun si esta o no en el carrito
     useEffect(() => {
         if (isInCarrito(props.idProducto)) {
             setInfoBotonCarrito(agregado);

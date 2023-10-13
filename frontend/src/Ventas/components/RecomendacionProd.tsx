@@ -12,6 +12,8 @@ interface RecomendacionProdProps {
     idProducto?: number;
 }
 
+// Componente que muestra una recomendacion de producto
+
 export const RecomendacionProd = (props: RecomendacionProdProps) => {
 
     const navigate = useNavigate();

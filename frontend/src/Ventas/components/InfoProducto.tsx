@@ -9,6 +9,8 @@ interface InfoProductoProps {
     descripcion: string;
 }
 
+// componente que muestra la informacion de un producto
+
 export const InfoProducto = (props: InfoProductoProps) => {
 
     return (
