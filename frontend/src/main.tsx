@@ -21,6 +21,6 @@ const ROUTES = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <PanLogin/>
+      <RouterProvider router={ROUTES}/>
   </React.StrictMode>,
 )
