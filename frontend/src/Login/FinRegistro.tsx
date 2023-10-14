@@ -8,6 +8,7 @@ export default function FinRegistro(){
 
     return(
         <>
+            <div id="Background">
             <div className='Container'>
                 <div className="header">
                     <div className="Text">Registro completo</div>
@@ -17,6 +18,7 @@ export default function FinRegistro(){
                 <div className="submit-container">
                     <div className="submit" onClick={NavPanLogin}>volver a inicio</div>
                 </div>
+            </div>
             </div>
         </>
 

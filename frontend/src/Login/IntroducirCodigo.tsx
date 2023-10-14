@@ -8,6 +8,7 @@ function IntroducirCodigo(){
 
     return(
         <>
+            <div id="Background">
             <div className='Container'>
                 <div className="header">
                     <div className="Text">Recuperar Cuenta</div>
@@ -23,6 +24,7 @@ function IntroducirCodigo(){
                 <div className="submit-container">
                     <div className="submit" onClick={NavNewContra}> Comprobar</div>
                 </div>
+            </div>
             </div>
         </>
 
