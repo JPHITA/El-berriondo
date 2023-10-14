@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 
     return(
         <>
+            <div id="Background">
             <div className='Container'>
                 <div className="header">
                     <div className="Text">Recuperar Cuenta</div>
@@ -27,6 +28,7 @@ import {useNavigate} from "react-router-dom";
                 <div className="submit-container">
                     <div className="submit" onClick={NavPanLogin}> Guardar y volver a inicio</div>
                 </div>
+            </div>
             </div>
         </>
 
