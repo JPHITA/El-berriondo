@@ -15,15 +15,14 @@ Se abre una consola en el directorio raiz del proyecto y se ejecuta el comando `
 #### con npm
 Se abre una consola en el directorio `frontend` y se ejecuta los comandos
 
-
-usuarios para entrar a la aplicacion
-
 ```bash
 npm install
 npm run dev
 ```
 
 ---
+usuarios para entrar a la aplicacion
+
 Email: "admin@gmail.com"
 
 Contraseña: "admin"
