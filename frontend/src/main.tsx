@@ -10,12 +10,13 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // rutas //////////////////////////////////////////////////////
-import { routes as ventasRoutes } from './Ventas/routes.tsx'
-import { routes as adminRoutes } from './Admin/adminRoutes.tsx'
+import { routes as ventasRoutes } from './Ventas/routes.tsx';
+import { routes as adminRoutes } from './Admin/adminRoutes.tsx';
+import { routes as loginRoutes } from './Login/Routes.tsx';
 const ROUTES = createBrowserRouter([
   ...ventasRoutes,
-  ...adminRoutes
-  // ...rutas de los demas modulos
+  ...adminRoutes,
+  ...loginRoutes
 ])
 //////////////////////////////////////////////////////////////
 

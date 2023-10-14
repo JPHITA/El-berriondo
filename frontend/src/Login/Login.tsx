@@ -1,6 +1,10 @@
+import React from 'react';
 import './LoginCss.css'
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+
+
+
 function PanLogin(){
     const navigate =useNavigate();
     const NavRecCuenta= () => {
@@ -16,6 +20,8 @@ function PanLogin(){
     const [Action,setAction]=useState("Registrarse");
     return(
         <>
+        <div id='background'>
+
             <div className='Container'>
                 <div className="header">
                     <div className="Text">{Action}</div>
@@ -63,6 +69,8 @@ function PanLogin(){
                     {Action==="Registrarse"?<div></div>:<div className="submitRedirigir" onClick={NavPagPrincipal}>Iniciar sesion</div>}
                 </div>
             </div>
+
+        </div>
         </>
 
     )

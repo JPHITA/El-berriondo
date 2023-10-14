@@ -8,14 +8,16 @@ function RecuperarCuenta(){
 
     return(
         <>
-            <div className='Container'>
+        <div id="Background">
+
+            <div id='containerRecuperacion' className='Container'>
                 <div className="header">
                     <div className="Text">Recuperar Cuenta</div>
                     <div className="Underline"></div>
                 </div>
-                <h2> Introduce la direccion de correo electronico que usaste para registrarte, te enviaremos un codigo de recuperacion</h2>
+                <h2 id='h2-recuperacion'> Introduce la direccion de correo electronico que usaste para registrarte, te enviaremos un codigo de recuperacion</h2>
                 <div className="Inputs">
-                    <div className="Input">
+                    <div className="Input-recuperacion">
                         <img src="" alt=""/>
                         <input type="email" placeholder="Correo electronico"/>
                     </div>
@@ -24,6 +26,8 @@ function RecuperarCuenta(){
                     <div className="submit" onClick={NavIntCod}> Enviar codigo</div>
                 </div>
             </div>
+
+        </div>
         </>
 
     )
