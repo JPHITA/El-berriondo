@@ -9,7 +9,7 @@ import PanLogin from "./Login";
 
 export const routes: RouteObject[] = [
     {
-        path: '/',
+        path: '/Login',
         element: <PanLogin/>
     },
     {
