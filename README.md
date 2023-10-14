@@ -15,19 +15,23 @@ Se abre una consola en el directorio raiz del proyecto y se ejecuta el comando `
 #### con npm
 Se abre una consola en el directorio `frontend` y se ejecuta los comandos
 
----
+
 usuarios para entrar a la aplicacion
-
-Email: "admin@gmail.com"
-Contraseña: "admin"
-
-Email: "User@gmail.com"
-Contraseña: "user"
-
 
 ```bash
 npm install
 npm run dev
 ```
+
+---
+Email: "admin@gmail.com"
+
+Contraseña: "admin"
+
+Email: "User@gmail.com"
+
+Contraseña: "user"
+
+--
 
 **por defecto el proyecto corre en el puerto 5173**
