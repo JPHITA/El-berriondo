@@ -20,7 +20,7 @@ export const Header = (props: HeaderProps) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary mb-4">
       <Container>
-        <Navbar.Brand href="#" onClick={() => navigate("/")}>
+        <Navbar.Brand href="#" onClick={() => navigate("/Ventas/Principal")}>
           <Image className='me-3' src={img} rounded />
           El berriondo
         </Navbar.Brand>
@@ -50,7 +50,7 @@ export const Header = (props: HeaderProps) => {
               <NavDropdown.Item href="#action/3.2">Mi Perfil</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Mis Compras</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="#action/3.4" onClick={() => navigate("/")}>
                 Cerrar Sesion
               </NavDropdown.Item>
             </NavDropdown>

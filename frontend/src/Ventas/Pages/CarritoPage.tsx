@@ -32,7 +32,7 @@ export const CarritoPage = () => {
         alert("Comprado!");
         setCarritoMemory({});
 
-        navigate("/");
+        navigate("/Ventas/Principal");
     }
 
     return (

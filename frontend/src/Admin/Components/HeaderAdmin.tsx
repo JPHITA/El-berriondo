@@ -8,19 +8,15 @@ import { useNavigate } from "react-router-dom";
 
 import img from "../../assets/Ventas/don berriondo.jpg";
 
-interface HeaderProps {
-  lengthCarrito?: number;
-}
-
 // Componente que muestra el header de la pagina
 
-export const Header = (props: HeaderProps) => {
+export const Header = () => {
   const navigate = useNavigate();
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary mb-4">
       <Container>
-        <Navbar.Brand href="#" onClick={() => navigate("/")}>
+        <Navbar.Brand href="#">
           <Image className='me-3' src={img} rounded />
           El berriondo
         </Navbar.Brand>
@@ -30,16 +26,19 @@ export const Header = (props: HeaderProps) => {
         <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
           <Nav>
 
-            <Nav.Link href="#" className='me-5 text-inline' onClick={() => navigate("/Ventas/Carrito")}>
+            <Nav.Link href="#" className='me-5 text-inline' onClick={() => navigate("/listadoProductos")}>
+              Productos
+            </Nav.Link>
 
-
+            <Nav.Link href="#" className='me-5 text-inline' onClick={() => navigate("/reporteVentas")}>
+              Reporte ventas
             </Nav.Link>
 
             <NavDropdown title="Menu" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.2">Mi Perfil</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Mis Compras</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="#action/3.4" onClick={() => navigate("/")}>
                 Cerrar Sesion
               </NavDropdown.Item>
             </NavDropdown>

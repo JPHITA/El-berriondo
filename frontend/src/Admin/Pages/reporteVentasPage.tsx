@@ -1,7 +1,7 @@
 import {Container, Row, Col, Table, Dropdown }from 'react-bootstrap';
 import { MockVentas, Venta } from '../Mocks/registroVentas.ts';
 
-import { Header } from './../../Ventas/components/HeaderAdmin.tsx';
+import { Header } from '../Components/HeaderAdmin.tsx';
 
 export const ReporteVentasPage = () => {
 
