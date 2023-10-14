@@ -1,10 +1,18 @@
 export interface Usuarios{
     Email: string;
-    Password: number
+    Password: string;
+    Privilege: boolean;
 }
 
-export const Usuarios: Usuarios[]= {
-{
-
-}
-}
+export const MockUsuarios: Usuarios[]= [
+    {
+        Email: "admin@gmail.com",
+        Password: "admin",
+        Privilege: true,
+    },
+    {
+        Email: "User@gmail.com",
+        Password: "user",
+        Privilege: false,
+    }
+]
