@@ -1,56 +1,50 @@
-import { Carousel, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-import { Header } from "../components/Header.js";
-import { CardProducto } from "../components/CardProducto.js";
-import { ModalRecomendacion }  from "../components/ModalRecomendacion.js";
+import { Header } from "../components/Header.tsx";
+import { CardProducto } from "../components/CardProducto.tsx";
+import { ModalRecomendacion } from "../components/ModalRecomendacion.tsx";
+import { FiltroCategorias } from "../components/FiltroCategorias.tsx";
 
 import { lengthCarrito } from "./../../services/carrito.ts";
 
-import { RandomProducto } from "./../Utils.ts";
+import { MockProductos } from "../Mocks/Productos.ts";
 
 export const PrincipalPage = () => {
-    const nCarruseles = 2;      // numero de carruseles
-    const nCartas = 12;         // cada carrusel tendra esta cantidad de cartas
-    const cartas_por_vista = 4; // cada slide del carrusel tendra esta cantidad de cartas
+    const [productos, setProductos] = useState(MockProductos); // Lista de productos a mostrar
+
+    function handleFiltro(idFiltroCat: number) {
+        if (idFiltroCat === -1) {
+            setProductos(MockProductos);
+        } else {
+            setProductos(MockProductos.filter(producto => producto.categoria === idFiltroCat));
+        }
+    }
 
     return (
         <>
-            <Header lengthCarrito={lengthCarrito()}/>
+            <Header lengthCarrito={lengthCarrito()} />
 
             <Container>
 
-                {/* numero de carruseles */}
-                {Array.from({ length: nCarruseles }, (_, i) => (
-                    <Carousel key={i} className="mb-5">
+                <FiltroCategorias handleFiltro={handleFiltro}/>
 
-                        {/* numero de grupos de cartas */}
-                        {Array.from({ length: nCartas / cartas_por_vista }, (_, j) => (
-                            <Carousel.Item key={j}>
-                                <Row>
-
-                                    {/* numero de cartas por grupo */}
-                                    {Array.from({ length: cartas_por_vista }, (_) => {
-                                        let producto = RandomProducto();
-
-                                        return (
-                                            <Col xs={12} sm={6} md={12/cartas_por_vista} key={producto.id}>
-                                                <CardProducto
-                                                    idProducto={producto.id}
-                                                    urlImagen={producto.urlimg}
-                                                    title={producto.nombre}
-                                                    precio={producto.precio}
-                                                    text={producto.descripcion_corta}
-                                                />
-                                            </Col>
-                                        )
-                                    })}
-
-                                </Row>
-                            </Carousel.Item>
-                        ))}
-
-                    </Carousel>
-                ))}
+                        <Row className="justify-content-center">
+                            {productos.map(function (prod, j) {
+                                return (
+                                    <Col key={j} lg={3} md={4} sm={6} xs={8} >
+                                        <CardProducto
+                                            idProducto={prod.id}
+                                            urlImagen={prod.urlimg}
+                                            title={prod.nombre}
+                                            text={prod.descripcion_corta}
+                                            precio={prod.precio}
+                                        />
+                                    </Col>
+                                )
+                            })}
+                        </Row>
 
             </Container>
 
