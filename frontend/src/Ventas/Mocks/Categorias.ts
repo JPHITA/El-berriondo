@@ -14,7 +14,7 @@ export const MockCategorias: Categoria[] = [
     },
     {
         id: 3,
-        nombre: "bebidas alcohólicas"
+        nombre: "Bebidas alcohólicas"
     },
     {
         id: 4,

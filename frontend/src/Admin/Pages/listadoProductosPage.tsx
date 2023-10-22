@@ -1,22 +1,77 @@
-import {Container, Row, Col, Table }from 'react-bootstrap';
-import { MockProductos } from '../Mocks/registroProductos';
+import {Container, Row, Col, Table}from 'react-bootstrap';
+import { MockProductos } from '../../Ventas/Mocks/Productos.ts';
+import { MockCategorias } from '../../Ventas/Mocks/Categorias.ts';
 import { ButtonModificarProducto } from '../Components/ButtonModificarProducto.tsx';
 import { ButtonRegistrarProducto } from '../Components/ButtonRegistrarProducto.tsx';
+import { FiltroCategorias } from "../../Ventas/Components/FiltroCategorias.tsx";
 import { Header } from '../Components/HeaderAdmin.tsx';
+import DataTable from 'react-data-table-component';
+import { useState } from 'react';
 
 export const ListadoProductosPage = () => {
+
+    const [Productos,setProductos]= useState(MockProductos);
+    const columns = [
+        {
+            name: 'ID',
+            selector: row => row.id,
+            sortable: true,
+        },
+        {
+            name: 'NOMBRE',
+            selector: row => row.nombre,
+            sortable: true,
+        },
+        {
+            name: 'PRECIO',
+            selector: row => row.precio,
+            sortable: true,
+        },
+        {
+            name: 'STOCK',
+            selector: row => row.stock,
+            sortable: true,
+        },
+        {
+            name: 'CATEGORIAS',
+            selector: row => MockCategorias.find(cat => cat.id === row.categoria)?.nombre,
+            sortable: true,
+        }
+    ];
+
+    function handleFiltro(idFiltroCat: number) {
+        if (idFiltroCat === -1) {
+            setProductos(MockProductos);
+        } else {
+            setProductos(MockProductos.filter(producto => producto.categoria === idFiltroCat));
+        }
+    }
+
 
     return (
         <>
         <Header/>
         <Container fluid > 
             <h1 style={{textAlign: "center"}}>Listado de Productos</h1>
+            <Col style={{textAlign: "right"}}>
+            <FiltroCategorias handleFiltro={handleFiltro}/>
+            </Col>
+            <Row>
+                <Col style={{justifyContent:'center'}}>                
+                <DataTable
+                    columns={columns}
+                    data={Productos}
+                />
+                </Col>
+            </Row>
             <Col style={{textAlign: "center"}}><ButtonModificarProducto/></Col>
             <p></p>
             <Col style={{textAlign: "center"}}><ButtonRegistrarProducto/></Col>
             <p></p>
-            <Row>
-                <Col style={{justifyContent:'center'}}>
+
+        </Container>
+        </>
+/*
                     <Table responsive bordered striped='columns'  variant='light'>  
                         <thead>
                             <tr>
@@ -39,12 +94,8 @@ export const ListadoProductosPage = () => {
                             })} 
                         </tbody>
                     </Table>
-                    </Col>
-            </Row>
+*/
 
-
-        </Container>
-        </>
   );
 };
 
