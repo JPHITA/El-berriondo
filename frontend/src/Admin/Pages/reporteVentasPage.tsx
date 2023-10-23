@@ -1,4 +1,6 @@
-import { Container, Row, Col, Table, Dropdown } from 'react-bootstrap';
+import { Container, Row, Col, Table, Dropdown, DropdownButton } from 'react-bootstrap';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 import { MockVentas, Venta } from '../../Ventas/Mocks/registroVentas.ts';
 import { Header } from '../Components/HeaderAdmin.tsx';
 import { useState } from 'react';
@@ -27,40 +29,42 @@ export const ReporteVentasPage = () => {
     const columns = [
         {
             name: 'ID',
-            selector: row => row.id,
+            selector: (row: any) => row.id,
             sortable: true,
         },
         {
             name: 'ESTADO',
-            selector: row => 
-                {let estados = actualizarEstados(row.estado)
-                    return(
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id = {row.id} >
-                        {row.estado}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        {estados.map(estado => (
+            cell: (row: any) => {
+                return (
+                    <DropdownButton
+                        as={ButtonGroup}
+                        key={row.id}
+                        id={`dropdown-${row.id}`}
+                        variant={"success"}
+                        title={row.estado}
+                    >
+                        {actualizarEstados(row.estado).map(estado => (
                             <Dropdown.Item>{estado}</Dropdown.Item>
                         ))}
-                    </Dropdown.Menu>
-                </Dropdown>
-                )},
-            sortable: true,
+                    </DropdownButton>
+                )
+            },
+            selector: (row: any) => row.estado,
+            sortable: false,
         },
         {
             name: 'USUARIO',
-            selector: row => row.usuario,
+            selector: (row: any) => row.usuario,
             sortable: true,
         },
         {
             name: 'GANANCIA',
-            selector: row => row.ganancia,
+            selector: (row: any) => row.ganancia,
             sortable: true,
         },
         {
             name: 'FECHA',
-            selector: row => row.fecha.toDateString(),
+            selector: (row: any) => row.fecha.toDateString(),
             sortable: true,
         }
     ];
