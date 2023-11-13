@@ -6,3 +6,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+
+  database:
+    build: ./database
+    ports:
+      - "5432:5432"
