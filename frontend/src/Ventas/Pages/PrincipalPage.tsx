@@ -1,6 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { Header } from "../components/Header.tsx";
 import { CardProducto } from "../components/CardProducto.tsx";
@@ -9,10 +8,25 @@ import { FiltroCategorias } from "../components/FiltroCategorias.tsx";
 
 import { lengthCarrito } from "./../../services/carrito.ts";
 
-import { MockProductos } from "../Mocks/Productos.ts";
+import { Producto, MockProductos } from "../Mocks/Productos.ts";
+import { fetchBackend } from "./../../services/backend.ts";
 
 export const PrincipalPage = () => {
-    const [productos, setProductos] = useState(MockProductos); // Lista de productos a mostrar
+    const [productos, setProductos] = useState<Producto[]>([]); // Lista de productos a mostrar
+
+    // Cargar productos desde el backend
+    useEffect(function(){
+        fetchBackend("/Ventas/getProductos", {
+            method: "GET", 
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then( async res => {
+            const data:Producto[] = await res.json();
+            
+            setProductos(data);
+        })
+    }, []);
 
     function handleFiltro(idFiltroCat: number) {
         if (idFiltroCat === -1) {
