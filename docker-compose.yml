@@ -7,6 +7,15 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - database
+
   database:
     build: ./database
     ports:
