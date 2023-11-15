@@ -23,8 +23,14 @@ class Database:
 
         return list(map(lambda x: dict(zip(cols, x)), data))
     
-    def execute(self, query):
-        return self.db.execute(text(query))
+    def execute(self, query, **params):
+        return self.db.execute(text(query), params)
+    
+    def commit(self):
+        self.db.commit()
+
+    def rollback(self):
+        self.db.rollback()
 
     def close(self):
         self.db.close()
