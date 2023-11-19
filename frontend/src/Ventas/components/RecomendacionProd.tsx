@@ -1,15 +1,19 @@
 import { Row } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import { RandomProducto, GetProducto } from "./../Utils.ts";
+import { Producto } from "../../types.ts";
+
+import { fetchBackend } from "../../services/backend.ts";
+
 
 interface RecomendacionProdProps {
     height: number;
     idProducto?: number;
+    excludeIdProds?: number[];
 }
 
 // Componente que muestra una recomendacion de producto
@@ -17,8 +21,27 @@ interface RecomendacionProdProps {
 export const RecomendacionProd = (props: RecomendacionProdProps) => {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [producto, setProducto] = useState(props.idProducto? GetProducto(props.idProducto) : RandomProducto());
+    const [producto, setProducto] = useState<Producto>();
+
+    useEffect(function() {
+        const url = props.idProducto? `/Ventas/${props.idProducto}` : "/Ventas/getRandomProducto";
+        const method = props.idProducto? "GET" : "POST";
+
+        fetchBackend(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({"excludeIdProds" : props.excludeIdProds || null })
+        }).then(async res => {
+            const data: Producto = await res.json();
+
+            setProducto(data);
+        });
+
+    }, [location]);
     
     return (
         <div
@@ -31,17 +54,16 @@ export const RecomendacionProd = (props: RecomendacionProdProps) => {
                     cursor: 'pointer',
                 }}
                 onClick={() => {
-                    navigate(`/Ventas/Detalle/${producto.id}`);
-                    setProducto(RandomProducto());
+                    navigate(`/Ventas/Detalle/${producto?.id || ""}`);
                 }}
         >
 
             <Row style={{ height: "70%" }}>
-                <Image src={producto.urlimg} fluid style={{ height: "100%" }}/>
+                <Image src={producto?.urlimg || ""} fluid style={{ height: "100%" }}/>
             </Row>
 
             <Row style={{ height: "30%", textAlign: "center"}}>
-                <h4 className="text-truncate">{producto.nombre}</h4>
+                <h4 className="text-truncate">{producto?.nombre || ""}</h4>
             </Row>
 
         </div>

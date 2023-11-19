@@ -153,7 +153,7 @@ export const DetallePage = () => {
                                         <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
                                     </Row>
 
-                                    <MultiRecomendacionProd height={138} />
+                                    <MultiRecomendacionProd height={138} excludeIdProds={[producto.id]}/>
                                 </>
                         }
 
@@ -174,7 +174,7 @@ export const DetallePage = () => {
                             producto.stock > 0 ?
                                 <>
                                     <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
-                                    <RecomendacionProd height={150} />
+                                    <RecomendacionProd height={150} excludeIdProds={[producto.id]}/>
                                 </>
 
                                 : // else

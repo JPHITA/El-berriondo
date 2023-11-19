@@ -1,3 +1,5 @@
+// BORRAR ARCHIVO
+
 interface Categoria{
     id: number,
     nombre: string,

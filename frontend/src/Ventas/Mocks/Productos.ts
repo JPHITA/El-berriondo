@@ -1,3 +1,4 @@
+// BORRAR ARCHIVO
 
 export interface Producto {
     id: number;

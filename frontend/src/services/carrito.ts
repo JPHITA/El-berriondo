@@ -5,12 +5,12 @@ interface ProductoCarrito {
 
 // Obtiene todo el carrito de compras
 function getCarrito(): ProductoCarrito {
-return JSON.parse(localStorage.getItem('carrito') || '{}');
+return JSON.parse(sessionStorage.getItem('carrito') || '{}');
 }
 
 // Sobreescribe el carrito de compras
 function setCarrito(carrito: any) {
-localStorage.setItem('carrito', JSON.stringify(carrito));
+sessionStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
 // verifica si un producto esta en el carrito de compras

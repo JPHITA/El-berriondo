@@ -1,7 +1,9 @@
 import { Col, Row } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import { MockCategorias } from '../Mocks/Categorias.ts';
+import { Categoria } from "./../../types.ts";
+
+import { fetchBackend } from "./../../services/backend.ts";
 
 import "./../../assets/Ventas/css/FiltroCategorias.css";
 
@@ -11,6 +13,21 @@ interface FiltroCategoriasProps {
 
 export const FiltroCategorias = (props: FiltroCategoriasProps) => {
     const [filtro, setFiltro] = useState(-1);
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
+
+    // Cargar categorias desde el backend
+    useEffect(function () {
+        fetchBackend("/Ventas/getCategorias", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(async res => {
+            const data: Categoria[] = await res.json();
+
+            setCategorias(data);
+        })
+    }, []);
 
     return (
         <Row className="mb-2">
@@ -27,7 +44,7 @@ export const FiltroCategorias = (props: FiltroCategoriasProps) => {
                     Todas
                 </button>
 
-                {MockCategorias.map((categoria, i) => (
+                {categorias.map((categoria, i) => (
                     <button
                         key={i}
                         type="button"
@@ -61,7 +78,7 @@ export const FiltroCategorias = (props: FiltroCategoriasProps) => {
                             <a className="dropdown-item">Todas</a>
                         </li>
 
-                        {MockCategorias.map((categoria, i) => (
+                        {categorias.map((categoria, i) => (
                             <li
                                 key={i}
                                 className={filtro === categoria.id ? "dropdown-item activado" : "dropdown-item"}

@@ -8,7 +8,8 @@ import { FiltroCategorias } from "../components/FiltroCategorias.tsx";
 
 import { lengthCarrito } from "./../../services/carrito.ts";
 
-import { Producto, MockProductos } from "../Mocks/Productos.ts";
+import { Producto } from "./../../types.ts";
+
 import { fetchBackend } from "./../../services/backend.ts";
 
 export const PrincipalPage = () => {
@@ -30,9 +31,9 @@ export const PrincipalPage = () => {
 
     function handleFiltro(idFiltroCat: number) {
         if (idFiltroCat === -1) {
-            setProductos(MockProductos);
+            setProductos(productos);
         } else {
-            setProductos(MockProductos.filter(producto => producto.categoria === idFiltroCat));
+            setProductos(productos.filter(producto => producto.categoria === idFiltroCat));
         }
     }
 

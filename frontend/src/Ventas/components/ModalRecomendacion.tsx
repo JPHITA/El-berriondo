@@ -2,8 +2,8 @@ import { useState, useEffect } from "react"
 import { Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import { RandomProducto } from "./../Utils.ts";
-import { Producto } from "../Mocks/Productos.ts";
+import { fetchBackend } from "../../services/backend.ts";
+import { Producto } from "./../../types.ts";
 
 // Componente que muestra un modal con un producto recomendado en la pagina principal
 
@@ -16,11 +16,11 @@ import { Producto } from "../Mocks/Productos.ts";
 
 export const ModalRecomendacion = () => {
     const [showModal, setShowModal] = useState(false);                          //state para mostrar el modal
-    const [RecProducto, setRecProducto] = useState<Producto>(RandomProducto()); //state para guardar el producto que se recomendara
+    const [RecProducto, setRecProducto] = useState<Producto>();                 //state para guardar el producto que se recomendara
 
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect(function () {
         const timer = setTimeout(() => {
             
             setShowModal(true);
@@ -30,8 +30,20 @@ export const ModalRecomendacion = () => {
         return () => {clearTimeout(timer)};
     }, [showModal]);
 
+    // funcion para obtener un producto aleatorio
+    async function RandomProducto() {
+        const response = await fetchBackend("/Ventas/getRandomProducto");
+        const data = await response.json();
+
+        // return data;
+        setRecProducto(data);
+    }
+
+    // se obtiene un producto aleatorio y se guarda en el state
+    useEffect(function () { RandomProducto() }, []);
+
     function handleClick() {
-        navigate(`/Ventas/Detalle/${RecProducto.id}`)
+        navigate(`/Ventas/Detalle/${RecProducto!.id}`)
     }
 
     return (
@@ -42,14 +54,14 @@ export const ModalRecomendacion = () => {
             setShowModal(false);
             
             //se cambia el producto que se recomendara
-            setRecProducto(RandomProducto());
+            RandomProducto();
          }}
         aria-labelledby="example-modal-sizes-title-sm"
         >
         <Modal.Header closeButton />
         <Modal.Body className="text-center" style={{ cursor: "pointer" }} onClick={handleClick}>
-            <h4>Producto recomendado: <b>{RecProducto.nombre}</b></h4>
-            <img src={RecProducto.urlimg}  className="img-fluid"/>
+            <h4>Producto recomendado: <b>{RecProducto?.nombre || ""}</b></h4>
+            <img src={RecProducto?.urlimg || ""}  className="img-fluid"/>
         </Modal.Body>
       </Modal>
     )
