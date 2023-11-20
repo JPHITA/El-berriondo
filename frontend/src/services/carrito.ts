@@ -1,6 +1,9 @@
 // se guarda en formato {idProducto: cantidad}
 interface ProductoCarrito {
-  [key: string | number]: number;
+  [key: string | number]: {
+    cantidad: number;
+    precio: number;
+  };
 }
 
 // Obtiene todo el carrito de compras
@@ -21,12 +24,17 @@ return id in carrito;
 }
 
 // Agrega un producto al carrito de compras
-function addProductoCarrito(id: string|number, cantidad: number) {
-let carrito = getCarrito();
+function addProductoCarrito(id: string|number, cantidad: number, precio: number) {
+  let carrito = getCarrito();
 
-if(!(id in carrito)) carrito[id] = cantidad;
+  if(!(id in carrito)){
+    carrito[id] = {
+      cantidad,
+      precio,
+    }
 
-setCarrito(carrito);
+    setCarrito(carrito);
+  }
 }
 
 // Elimina un producto del carrito de compras
@@ -39,11 +47,11 @@ function removeProductoCarrito(id: string|number) {
 // Edita la cantidad de un producto en el carrito de compras
 function editProductoCarrito(id: string|number, cantidad: number) {
   let carrito = getCarrito();
-  carrito[id] = cantidad;
+  carrito[id].cantidad = cantidad;
   setCarrito(carrito);
 }
 
-// Obtiene la cantidad de producto en el carrito de compras
+// Obtiene la cantidad de productos en el carrito de compras
 function lengthCarrito() {
   let carrito = getCarrito();
   return Object.keys(carrito).length;

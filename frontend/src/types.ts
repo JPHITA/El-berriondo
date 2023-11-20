@@ -6,6 +6,7 @@ export interface Producto {
     precio: number;
     stock: number;
     urlimg: string;
+    categorias?: number[];
 }
 
 export interface Categoria{

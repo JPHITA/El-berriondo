@@ -39,7 +39,8 @@ const Dummyproducto: Producto = {
     descripcion_larga: "",
     precio: 1000,
     stock: -1,
-    urlimg: "https://cdn-icons-png.flaticon.com/512/8676/8676496.png"
+    urlimg: "https://cdn-icons-png.flaticon.com/512/8676/8676496.png",
+    categorias: undefined
 }
 
 
@@ -70,26 +71,24 @@ export const DetallePage = () => {
             const data: Producto = await res.json();
 
             if (isInCarrito(data.id)) {
-                setCant_a_llevar(getCarrito()[data.id]);
+                setCant_a_llevar(getCarrito()[data.id].cantidad);
             } else {
                 setCant_a_llevar(1);
             }
-
+            
             setProducto(data);
         }).catch(err => {
-            // console.log(err);
+            console.log(err);
         });
 
-        return () => {
-            abortController.abort();
-        }
+        return () => { abortController.abort() }
         
     }, [location, idProducto]);
 
     // ### funciones para manejar los eventos de los componentes ###
     function handleAgregarAlCarrito() {
         if (!isInCarrito(producto.id)) {
-            addProductoCarrito(producto.id, cant_a_llevar);
+            addProductoCarrito(producto.id, cant_a_llevar, producto.precio);
             forceUpdate();
         }
     }
@@ -188,7 +187,11 @@ export const DetallePage = () => {
                                         <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
                                     </Row>
 
-                                    <MultiRecomendacionProd height={138} excludeIdProds={excludeProds.current}/>
+                                    <MultiRecomendacionProd height={138}
+                                    excludeIdProds={excludeProds.current}
+                                    categorias={producto.categorias}
+                                    nombre={producto.nombre}
+                                    />
                                 </>
                         }
 
@@ -209,7 +212,11 @@ export const DetallePage = () => {
                             producto.stock > 0 ?
                                 <>
                                     <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
-                                    <RecomendacionProd height={150} excludeIdProds={excludeProds.current}/>
+                                    <RecomendacionProd height={150}
+                                    excludeProds={excludeProds.current}
+                                    categorias={producto.categorias}
+                                    nombre={producto.nombre}
+                                    />
                                 </>
 
                                 : // else

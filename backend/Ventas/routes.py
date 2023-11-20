@@ -1,12 +1,10 @@
 from flask import Blueprint, request
-from Ventas.model import VentasModel
 from flask_restful import Api, Resource
+
+from Ventas.model import VentasModel
 
 Ventas = Blueprint('Ventas', __name__, url_prefix='/Ventas')
 api = Api(Ventas)
-
-# TODO
-# - ver que funcione el request.get_json() cuando no se envia nada
 
 class Productos(Resource):
     def get(self):
@@ -18,16 +16,14 @@ api.add_resource(Productos, '/getProductos')
 
 class RandomProducto(Resource):
     def post(self):
-        params = request.get_json(silent=True)
+        params = request.get_json(silent=True) or dict()
 
-        if params != None:
-            excludeProds = params.get('excludeProds', None)
-            cant = params.get('cant', 1)
-        else:
-            excludeProds = None
-            cant = 1
+        excludeProds = params.get('excludeProds', None)
+        categorias = params.get('categorias', None)
+        nombre = params.get('nombre', None)
+        cant = params.get('cant', 1)
 
-        prods = VentasModel.getRandomProducto(excludeProds, cant)
+        prods = VentasModel.getRandomProducto(excludeProds, categorias, nombre, cant)
 
         return prods
 

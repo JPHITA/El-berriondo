@@ -8,15 +8,18 @@ class VentasModel:
 
         SQL = """
         SELECT
-            id,
-            nombre,
-            descripcion_larga,
-            descripcion_corta,
-            CAST (precio AS DOUBLE PRECISION) AS precio,
-            stock,
-            urlimg
-        FROM productos
-        WHERE activo = TRUE
+            p.id,
+            p.nombre,
+            p.descripcion_larga,
+            p.descripcion_corta,
+            CAST (p.precio AS DOUBLE PRECISION) AS precio,
+            p.stock,
+            p.urlimg,
+            array_agg(cp.id_categoria) AS categorias
+        FROM productos p
+        JOIN categorias_productos cp ON p.id = cp.id_producto
+        WHERE p.activo = TRUE
+        GROUP BY 1,2,3,4,5,6,7
         LIMIT 50
         """
 
@@ -27,32 +30,45 @@ class VentasModel:
         return data
     
     @classmethod
-    def getRandomProducto(cls, excludeProds = None, cant = 1):
+    def getRandomProducto(cls, excludeProds = None, categorias = None, nombre = None, cant = 1):
         db = Database()
+
+        if nombre != None: nombre = f'%{nombre}%'
 
         SQL = """
         SELECT
-            id,
-            nombre,
-            descripcion_larga,
-            descripcion_corta,
-            CAST (precio AS DOUBLE PRECISION) AS precio,
-            stock,
-            urlimg
-        FROM productos
-        WHERE activo = TRUE
+            p.id,
+            p.nombre,
+            p.descripcion_larga,
+            p.descripcion_corta,
+            CAST (p.precio AS DOUBLE PRECISION) AS precio,
+            p.stock,
+            p.urlimg
+        FROM productos p
         """
 
-        if excludeProds:
-            SQL += " AND id NOT IN (SELECT UNNEST(:excludeProds))"
-        
+        if categorias: SQL += " JOIN categorias_productos cp ON p.id = cp.id_producto"
+
+        SQL += " WHERE p.activo = TRUE"
+
+        if excludeProds: SQL += " AND p.id NOT IN (SELECT UNNEST(:excludeProds))"
+
+        if categorias != None and nombre != None:
+            SQL += " AND (cp.id_categoria IN (SELECT UNNEST(:categorias)) OR p.nombre ILIKE :nombre)"
+
+        elif categorias != None:
+            SQL += " AND cp.id_categoria IN (SELECT UNNEST(:categorias))"
+
+        elif nombre != None:
+            SQL += " AND p.nombre ILIKE :nombre"
+
+    
         SQL += """
         ORDER BY RANDOM()
         LIMIT :cant
         """
-
-
-        data = db.query(SQL, excludeProds=excludeProds, cant=cant)
+        
+        data = db.query(SQL, excludeProds=excludeProds, categorias=categorias, nombre=nombre, cant=cant)
 
         db.close()
 
@@ -64,16 +80,19 @@ class VentasModel:
 
         SQL = """
         SELECT
-            id,
-            nombre,
-            descripcion_larga,
-            descripcion_corta,
-            CAST (precio AS DOUBLE PRECISION) AS precio,
-            stock,
-            urlimg
-        FROM productos
-        WHERE activo = TRUE
-        AND id = :id
+            p.id,
+            p.nombre,
+            p.descripcion_larga,
+            p.descripcion_corta,
+            CAST (p.precio AS DOUBLE PRECISION) AS precio,
+            p.stock,
+            p.urlimg,
+            array_agg(cp.id_categoria) AS categorias
+        FROM productos p
+        JOIN categorias_productos cp ON p.id = cp.id_producto 
+        WHERE p.activo = TRUE
+        AND p.id = :id
+        GROUP BY 1,2,3,4,5,6,7
         """
 
         data = db.query(SQL, id=idProducto)

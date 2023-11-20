@@ -13,12 +13,17 @@ import { Producto } from "./../../types.ts";
 import { fetchBackend } from "./../../services/backend.ts";
 
 export const PrincipalPage = () => {
-    const [productos, setProductos] = useState<Producto[]>([]); // Lista de productos a mostrar
+    const [productos, setProductos] = useState<Producto[]>([]); // Lista de productos
+    const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); // Lista de productos filtrados por categoría
 
     // Cargar productos desde el backend
     useEffect(function(){
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
         fetchBackend("/Ventas/getProductos", {
             method: "GET", 
+            signal: signal,
             headers: {
                 "Content-Type": "application/json",
             }
@@ -26,14 +31,19 @@ export const PrincipalPage = () => {
             const data:Producto[] = await res.json();
             
             setProductos(data);
-        })
+            setProductosFiltrados(data);
+        }).catch( err => {
+            console.log(err);
+        });
+
+        return () => { abortController.abort() }
     }, []);
 
     function handleFiltro(idFiltroCat: number) {
         if (idFiltroCat === -1) {
-            setProductos(productos);
+            setProductosFiltrados(productos);
         } else {
-            setProductos(productos.filter(producto => producto.categoria === idFiltroCat));
+            setProductosFiltrados(productos.filter(producto => producto.categorias?.includes(idFiltroCat)));
         }
     }
 
@@ -46,7 +56,7 @@ export const PrincipalPage = () => {
                 <FiltroCategorias handleFiltro={handleFiltro}/>
 
                         <Row className="justify-content-center">
-                            {productos.map(function (prod, j) {
+                            {productosFiltrados.map(function (prod, j) {
                                 return (
                                     <Col key={j} lg={3} md={4} sm={6} xs={8} >
                                         <CardProducto
