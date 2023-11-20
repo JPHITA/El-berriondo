@@ -1,3 +1,5 @@
+// BORRAR ARCHIVO
+
 import { MockProductos } from "./Mocks/Productos.ts";
 import { Producto } from "./../types.ts";
 

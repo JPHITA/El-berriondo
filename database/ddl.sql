@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS categorias_productos (
 CREATE TABLE IF NOT EXISTS ventas (
     id SERIAL PRIMARY KEY,
     id_usuario INTEGER REFERENCES usuarios(id),
+    estado VARCHAR(50),
     fecha_registro TIMESTAMP
 );
 

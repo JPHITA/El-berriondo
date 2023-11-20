@@ -12,7 +12,7 @@ class VentasModel:
             nombre,
             descripcion_larga,
             descripcion_corta,
-            precio,
+            CAST (precio AS DOUBLE PRECISION) AS precio,
             stock,
             urlimg
         FROM productos
@@ -27,7 +27,7 @@ class VentasModel:
         return data
     
     @classmethod
-    def getRandomProducto(cls, excludeProds = None):
+    def getRandomProducto(cls, excludeProds = None, cant = 1):
         db = Database()
 
         SQL = """
@@ -36,7 +36,7 @@ class VentasModel:
             nombre,
             descripcion_larga,
             descripcion_corta,
-            precio,
+            CAST (precio AS DOUBLE PRECISION) AS precio,
             stock,
             urlimg
         FROM productos
@@ -44,19 +44,19 @@ class VentasModel:
         """
 
         if excludeProds:
-            SQL += " AND id NOT IN :excludeProds"
+            SQL += " AND id NOT IN (SELECT UNNEST(:excludeProds))"
         
         SQL += """
         ORDER BY RANDOM()
-        LIMIT 1
+        LIMIT :cant
         """
 
 
-        data = db.query(SQL, excludeProds=excludeProds)
+        data = db.query(SQL, excludeProds=excludeProds, cant=cant)
 
         db.close()
 
-        return data[0]
+        return data
 
     @classmethod
     def getProducto(cls, idProducto):
@@ -68,7 +68,7 @@ class VentasModel:
             nombre,
             descripcion_larga,
             descripcion_corta,
-            precio,
+            CAST (precio AS DOUBLE PRECISION) AS precio,
             stock,
             urlimg
         FROM productos

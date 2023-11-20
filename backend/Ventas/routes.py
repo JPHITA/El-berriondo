@@ -1,38 +1,50 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from Ventas.model import VentasModel
+from flask_restful import Api, Resource
 
 Ventas = Blueprint('Ventas', __name__, url_prefix='/Ventas')
+api = Api(Ventas)
 
 # TODO
-# - cambiar la aplicacion para usar flask_restful
-# - hacer que getrandomproducto reciba un array de ids de productos a excluir
-#   y que reciba cuantos productos devolver
 # - ver que funcione el request.get_json() cuando no se envia nada
 
-@Ventas.get('/getProductos')
-def index():
-    prods = VentasModel.getProductos()
+class Productos(Resource):
+    def get(self):
+        prods = VentasModel.getProductos()
 
-    return jsonify(prods)
+        return prods
 
-@Ventas.post('/getRandomProducto')
-def getRandomProducto():
-    print("data recibida", request.data)
+api.add_resource(Productos, '/getProductos')
+
+class RandomProducto(Resource):
+    def post(self):
+        params = request.get_json(silent=True)
+
+        if params != None:
+            excludeProds = params.get('excludeProds', None)
+            cant = params.get('cant', 1)
+        else:
+            excludeProds = None
+            cant = 1
+
+        prods = VentasModel.getRandomProducto(excludeProds, cant)
+
+        return prods
+
+api.add_resource(RandomProducto, '/getRandomProducto')
+
+class Producto(Resource):
+    def get(self, idProducto):
+        prod = VentasModel.getProducto(idProducto)
+
+        return prod
+
+api.add_resource(Producto, '/getProducto/<int:idProducto>')
+
+class Categorias(Resource):
+    def get(self):
+        categorias = VentasModel.getCategorias()
+
+        return categorias
     
-    excludeProds = request.get_json().get('excludeProds', None)
-    
-    prods = VentasModel.getRandomProducto(excludeProds)
-
-    return jsonify(prods)
-
-@Ventas.get('/getProducto/<int:idProducto>')
-def getProducto(idProducto):
-    prod = VentasModel.getProducto(idProducto)
-
-    return jsonify(prod)
-
-@Ventas.get("/getCategorias")
-def getCategorias():
-    categorias = VentasModel.getCategorias()
-
-    return jsonify(categorias)
+api.add_resource(Categorias, '/getCategorias')

@@ -12,7 +12,7 @@ import { fetchBackend } from "../../services/backend.ts";
 
 interface RecomendacionProdProps {
     height: number;
-    idProducto?: number;
+    Prod?: Producto;
     excludeIdProds?: number[];
 }
 
@@ -23,26 +23,43 @@ export const RecomendacionProd = (props: RecomendacionProdProps) => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const [producto, setProducto] = useState<Producto>();
-
-    useEffect(function() {
-        const url = props.idProducto? `/Ventas/${props.idProducto}` : "/Ventas/getRandomProducto";
-        const method = props.idProducto? "GET" : "POST";
-
-        fetchBackend(url, {
-            method: method,
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({"excludeIdProds" : props.excludeIdProds || null })
-        }).then(async res => {
-            const data: Producto = await res.json();
-
-            setProducto(data);
-        });
-
-    }, [location]);
+    const [producto, setProducto] = useState<Producto | undefined>();
     
+    useEffect(function () {
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
+        if (props.Prod) {
+            setProducto(props.Prod);
+        } else {
+            
+            // si no se pasa un producto, se obtiene uno aleatorio
+            fetchBackend("/Ventas/getRandomProducto", {
+                method: "POST",
+                signal: signal,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    { "excludeProds": props.excludeIdProds || null }
+                )
+                
+            }).then(async res => {
+                const data: Producto[] = await res.json();
+                
+                setProducto(data[0]);
+            }).catch(err => {
+                // console.log(err);
+            });
+
+        }
+
+        return () => {
+            abortController.abort();
+        }
+
+    }, [location, props.Prod, props.excludeIdProds]);
+
     return (
         <div
             style={
@@ -53,16 +70,16 @@ export const RecomendacionProd = (props: RecomendacionProdProps) => {
                     borderRadius: '5px',
                     cursor: 'pointer',
                 }}
-                onClick={() => {
-                    navigate(`/Ventas/Detalle/${producto?.id || ""}`);
-                }}
+            onClick={() => {
+                navigate(`/Ventas/Detalle/${producto?.id || ""}`);
+            }}
         >
 
             <Row style={{ height: "70%" }}>
-                <Image src={producto?.urlimg || ""} fluid style={{ height: "100%" }}/>
+                <Image src={producto?.urlimg || ""} fluid style={{ height: "100%" }} />
             </Row>
 
-            <Row style={{ height: "30%", textAlign: "center"}}>
+            <Row style={{ height: "30%", textAlign: "center" }}>
                 <h4 className="text-truncate">{producto?.nombre || ""}</h4>
             </Row>
 

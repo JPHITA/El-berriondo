@@ -5,7 +5,6 @@ export interface Producto {
     descripcion_corta: string;
     precio: number;
     stock: number;
-    categoria: number;
     urlimg: string;
 }
 

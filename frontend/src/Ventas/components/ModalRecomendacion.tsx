@@ -32,11 +32,17 @@ export const ModalRecomendacion = () => {
 
     // funcion para obtener un producto aleatorio
     async function RandomProducto() {
-        const response = await fetchBackend("/Ventas/getRandomProducto");
+        const response = await fetchBackend("/Ventas/getRandomProducto", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        
+        });
         const data = await response.json();
 
         // return data;
-        setRecProducto(data);
+        setRecProducto(data[0]);
     }
 
     // se obtiene un producto aleatorio y se guarda en el state

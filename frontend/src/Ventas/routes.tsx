@@ -5,10 +5,6 @@ import { DetallePage } from './Pages/DetallePage.tsx';
 import { CarritoPage } from './Pages/CarritoPage.tsx';
 
 export const routes: RouteObject[] = [
-    // {
-    //     path: '/Ventas',
-    //     element: <PrincipalPage/>
-    // },
     {
         path: '/Ventas',
         children: [
