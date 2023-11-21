@@ -14,7 +14,7 @@ export const SetterCantidadProd = (props: SetterCantidadProps) => {
                 <span role="button" className="input-group-text" onClick={props.handleDisminuir}>-</span>
 
                 <input
-                    value={props.cantActual}
+                    value={props.cantActual || 0}
                     type="text"
                     className="form-control text-center"
                     disabled

@@ -71,7 +71,7 @@ export const DetallePage = () => {
             const data: Producto = await res.json();
 
             if (isInCarrito(data.id)) {
-                setCant_a_llevar(getCarrito()[data.id].cantidad);
+                setCant_a_llevar(getCarrito()[data.id]);
             } else {
                 setCant_a_llevar(1);
             }
@@ -88,7 +88,7 @@ export const DetallePage = () => {
     // ### funciones para manejar los eventos de los componentes ###
     function handleAgregarAlCarrito() {
         if (!isInCarrito(producto.id)) {
-            addProductoCarrito(producto.id, cant_a_llevar, producto.precio);
+            addProductoCarrito(producto.id, cant_a_llevar);
             forceUpdate();
         }
     }

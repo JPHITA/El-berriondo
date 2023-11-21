@@ -3,7 +3,7 @@ from utils.Database import Database
 class VentasModel: 
 
     @classmethod
-    def getProductos(cls):
+    def getProductos(cls, idProds=None):
         db = Database()
 
         SQL = """
@@ -19,11 +19,15 @@ class VentasModel:
         FROM productos p
         JOIN categorias_productos cp ON p.id = cp.id_producto
         WHERE p.activo = TRUE
+        """
+        if idProds: SQL += " AND p.id IN (SELECT UNNEST(:idProds)) "
+
+        SQL += """
         GROUP BY 1,2,3,4,5,6,7
         LIMIT 50
         """
 
-        data = db.query(SQL)
+        data = db.query(SQL, idProds=idProds)
 
         db.close()
 

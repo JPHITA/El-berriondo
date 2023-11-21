@@ -9,6 +9,13 @@ api = Api(Ventas)
 class Productos(Resource):
     def get(self):
         prods = VentasModel.getProductos()
+        return prods
+    
+    def post(self):
+        params = request.get_json(silent=True) or dict()
+
+        idProds = params.get('idProds', None)
+        prods = VentasModel.getProductos(idProds)
 
         return prods
 
