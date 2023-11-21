@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Row, Col, Button, Container } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import { Header } from "./../components/Header.tsx";
 import { CardProductoCarrito } from "../components/CardProductoCarrito.tsx";
 import { RecomendacionProd } from "./../components/RecomendacionProd.tsx";
 
-import { getCarrito, lengthCarrito } from "./../../services/carrito.ts";
+import { getCarrito, lengthCarrito, clearCarrito } from "./../../services/carrito.ts";
 
 import { fetchBackend } from '../../services/backend.ts';
 import { Producto } from "../../types.ts";
@@ -19,28 +19,36 @@ export const CarritoPage = () => {
     const [productosCarrito, setProductosCarrito] = useState<Producto[]>(); // estado para manejar los productos del carrito
     const [precioTotal, setPrecioTotal] = useState(0); // estado para manejar el precio total del carrito
 
+    const excludeProds = useRef<number[]>([]); // se excluyen de la publicidad, los productos que ya estan en el carrito
+
+    const idUsuario = 2; // TODO: obtener el id del usuario logueado
+
     useEffect(function(){
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-        fetchBackend("/Ventas/getProductos", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "idProds": Object.keys(carrito).map((id) => parseInt(id))
-            }),
-            signal: signal
-        }).then(async(res) => {
+        if (lengthCarrito() > 0) {
+            fetchBackend("/Ventas/getProductos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "idProds": Object.keys(carrito).map((id) => parseInt(id))
+                }),
+                signal: signal
+            }).then(async(res) => {
 
-                const data: Producto[] = await res.json();
-                setProductosCarrito(data);
-                setPrecioTotal( data.reduce((prev, p) => prev + (p.precio * carrito[p.id]), 0) );
+                    const data: Producto[] = await res.json();
+                    setProductosCarrito(data);
+                    setPrecioTotal( data.reduce((prev, p) => prev + (p.precio * carrito[p.id]), 0) );
 
-            }).catch((err) => {
-                console.log(err);
-            });
+                }).catch((err) => {
+                    console.log(err);
+                });
+        }
+
+        excludeProds.current = Object.keys(carrito).map(id => parseInt(id));
 
         return () => { abortController.abort(); }
         
@@ -58,7 +66,31 @@ export const CarritoPage = () => {
         setProductosCarrito(nuevosProductosCarrito);
     }, [carrito]);
 
-    function handleComprar() {}
+    function handleComprar(){
+
+        fetchBackend("/Ventas/SaveVenta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "idUsuario": idUsuario,
+                "productos": productosCarrito?.map(p => ({
+                    "idProducto": p.id,
+                    "cantidad": carrito[p.id] || 0,
+                    "precio": p.precio
+                }))
+            })
+        }).then(async(res) => {
+                const data = await res.text();
+                console.log(data);
+            }).catch((err) => {
+                console.log(err);
+        })
+
+        clearCarrito();
+        navigate("/Ventas/Principal");
+    }
 
     return (
         <>
@@ -72,7 +104,7 @@ export const CarritoPage = () => {
 
                     <Col lg={4} md={5} sm={12}>
                         <div className="d-grid gap-2">
-                            <Button variant="success" size="lg" onClick={handleComprar}>
+                            <Button variant="success" size="lg" onClick={handleComprar} disabled={lengthCarrito() === 0}>
                                 Realizar Compra
                             </Button>
                         </div>
@@ -90,11 +122,11 @@ export const CarritoPage = () => {
 
                 <Row>
                     <Col>
-                        <RecomendacionProd height={120} />
+                        <RecomendacionProd height={120} excludeProds={excludeProds.current}/>
                     </Col>
 
                     <Col>
-                        <RecomendacionProd height={120} />
+                        <RecomendacionProd height={120} excludeProds={excludeProds.current}/>
                     </Col>
                 </Row>
 

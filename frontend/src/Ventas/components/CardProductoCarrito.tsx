@@ -13,10 +13,6 @@ interface CardProductoCarritoProps {
     setCarritoState: (carrito: {[id: string]: number}) => void,
 }
 
-// TODO
-// - restringir que no se muestre publcidad de productos que ya estan en el carrito
-// - registrar la compra
-
 export const CardProductoCarrito = (props: CardProductoCarritoProps) => {
 
     const { producto, cantidad, setCarritoState } = props;

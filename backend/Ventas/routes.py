@@ -6,6 +6,24 @@ from Ventas.model import VentasModel
 Ventas = Blueprint('Ventas', __name__, url_prefix='/Ventas')
 api = Api(Ventas)
 
+
+class SaveVenta(Resource):
+    def post(self):
+        try:
+            params = request.get_json()
+
+            idUsuario = params['idUsuario']
+            productos = params['productos']
+
+            VentasModel.saveVenta(idUsuario, productos)
+
+            return "OK", 200
+        
+        except Exception as e:
+            return str(e), 400
+        
+api.add_resource(SaveVenta, '/SaveVenta')
+
 class Productos(Resource):
     def get(self):
         prods = VentasModel.getProductos()

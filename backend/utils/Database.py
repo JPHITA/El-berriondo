@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, insert
 import os
 
 
@@ -22,6 +22,15 @@ class Database:
         data = cursor.fetchall()
 
         return list(map(lambda x: dict(zip(cols, x)), data))
+    
+    def insert(self, table, return_id=False, **values):
+        stmt = insert(table).values(**values).returning(table.c.id)
+
+        res = self.db.execute(stmt)
+
+        if return_id: 
+            self.commit()
+            return res.fetchone()[0]
     
     def execute(self, query, **params):
         return self.db.execute(text(query), params)

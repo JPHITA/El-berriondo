@@ -1,6 +1,46 @@
 from utils.Database import Database
+from sqlalchemy import table, column
 
-class VentasModel: 
+class VentasModel:
+
+    ventas = table("ventas",
+        column("id"),
+        column("id_usuario"),
+        column("estado"),
+        column("fecha_registro")
+    )
+
+    ventas_productos = table("ventas_productos",
+        column("id"),
+        column("id_venta"),
+        column("id_producto"),
+        column("cantidad"),
+        column("precio")
+    )
+
+    @classmethod
+    def saveVenta(cls, idUsuario, productos):
+        db = Database()
+
+        id_venta = db.insert(cls.ventas, return_id=True,
+            id_usuario=idUsuario,
+            estado="En proceso",
+            fecha_registro="NOW()"
+        )
+
+        for prod in productos:
+            db.insert(cls.ventas_productos,
+                id_venta=id_venta,
+                id_producto=prod['idProducto'],
+                cantidad=prod['cantidad'],
+                precio=prod['precio']
+            )
+            
+            db.execute("UPDATE productos SET stock = stock - :cantidad WHERE id = :idProducto", cantidad=prod['cantidad'], idProducto=prod['idProducto'])
+
+        db.commit()
+
+        db.close()
 
     @classmethod
     def getProductos(cls, idProds=None):
@@ -57,10 +97,10 @@ class VentasModel:
 
         if excludeProds: SQL += " AND p.id NOT IN (SELECT UNNEST(:excludeProds))"
 
-        if categorias != None and nombre != None:
+        if categorias and nombre != None:
             SQL += " AND (cp.id_categoria IN (SELECT UNNEST(:categorias)) OR p.nombre ILIKE :nombre)"
 
-        elif categorias != None:
+        elif categorias:
             SQL += " AND cp.id_categoria IN (SELECT UNNEST(:categorias))"
 
         elif nombre != None:
@@ -121,4 +161,4 @@ class VentasModel:
         db.close()
 
         return data
-    
+       
