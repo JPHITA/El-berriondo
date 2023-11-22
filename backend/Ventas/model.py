@@ -2,7 +2,6 @@ from utils.Database import Database
 from sqlalchemy import table, column
 
 class VentasModel:
-
     ventas = table("ventas",
         column("id"),
         column("id_usuario"),
@@ -20,6 +19,16 @@ class VentasModel:
 
     @classmethod
     def saveVenta(cls, idUsuario, productos):
+        """
+        Guarda una venta en la base de datos, guarda los productos de esa venta y actualiza el stock de los productos.
+
+        Args:
+            idUsuario (int): El ID del usuario que realiza la venta.
+            productos ([producto]): Lista de productos vendidos.
+
+        Returns:
+            None
+        """
         db = Database()
 
         id_venta = db.insert(cls.ventas, return_id=True,
@@ -44,6 +53,15 @@ class VentasModel:
 
     @classmethod
     def getProductos(cls, idProds=None):
+        """
+        Obtiene los productos de la base de datos.
+
+        Args:
+            idProds (list, optional): Lista de IDs de productos a obtener. Defaults to None.
+
+        Returns:
+            list: Lista de productos obtenidos.
+        """
         db = Database()
 
         SQL = """
@@ -74,7 +92,19 @@ class VentasModel:
         return data
     
     @classmethod
-    def getRandomProducto(cls, excludeProds = None, categorias = None, nombre = None, cant = 1):
+    def getRandomProducto(cls, excludeProds=None, categorias=None, nombre=None, cant=1):
+        """
+        Obtiene productos aleatorios de la base de datos.
+
+        Args:
+            excludeProds (list, optional): Lista de IDs de productos a excluir. Defaults to None.
+            categorias (list, optional): Lista de IDs de categorías de productos a obtener. Defaults to None.
+            nombre (str, optional): Nombre de producto similar a buscar. Defaults to None.
+            cant (int, optional): Cantidad de productos a obtener. Defaults to 1.
+
+        Returns:
+            list: Lista de productos obtenidos.
+        """
         db = Database()
 
         if nombre != None: nombre = f'%{nombre}%'
@@ -120,6 +150,15 @@ class VentasModel:
 
     @classmethod
     def getProducto(cls, idProducto):
+        """
+        Obtiene un producto de la base de datos.
+
+        Args:
+            idProducto (int): El ID del producto a obtener.
+
+        Returns:
+            dict: El producto obtenido.
+        """
         db = Database()
 
         SQL = """
@@ -147,6 +186,12 @@ class VentasModel:
 
     @classmethod
     def getCategorias(cls):
+        """
+        Obtiene las categorías de productos de la base de datos.
+
+        Returns:
+            list: Lista de categorías obtenidas.
+        """
         db = Database()
 
         SQL = """

@@ -7,3 +7,4 @@ app = Flask(__name__)
 CORS(app)
 
 app.register_blueprint(Ventas)
+# registrar demas modulos
