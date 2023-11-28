@@ -7,6 +7,7 @@ export interface Producto {
     stock: number;
     urlimg: string;
     categorias?: number[];
+    activo: boolean;
 }
 
 export interface Categoria{
