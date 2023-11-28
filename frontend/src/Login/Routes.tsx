@@ -5,6 +5,7 @@ import IntroducirCodigo from "./IntroducirCodigo";
 import NuevaContraseña from "./NuevaContraseña";
 import FinRegistro from "./FinRegistro";
 import PanLogin from "./Login";
+import PanRegister from "./Register";
 
 
 export const routes: RouteObject[] = [
@@ -28,5 +29,9 @@ export const routes: RouteObject[] = [
     {
         path:'/Finregistro',
         element: <FinRegistro/>
+    },
+    {
+        path:'/Register',
+        element: <PanRegister/>
     }
 ]
