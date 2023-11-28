@@ -14,7 +14,7 @@ export default function FinRegistro(){
                     <div className="Text">Registro completo</div>
                     <div className="Underline"></div>
                 </div>
-                <h2> Te hemos enviado a tu correo un link de activación para tu cuenta</h2>
+                <h2> Te has registrado exitosamente</h2>
                 <div className="submit-container">
                     <div className="submit" onClick={NavPanLogin}>volver a inicio</div>
                 </div>
