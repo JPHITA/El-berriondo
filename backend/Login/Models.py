@@ -10,3 +10,9 @@ class User:
                   column("telefono")
                   )
 
+
+    dbuser=Database()
+    def setUsuario(self):
+
+
+    def getUsuario(self):
