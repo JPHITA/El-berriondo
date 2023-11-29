@@ -1,26 +1,26 @@
 from utils.Database import Database
 from sqlalchemy import table, column
 class User:
-    usuario=table("usuarios",
+    usuarios=table("usuarios",
                   column("id"),
                   column("nombre"),
+                   column('apellido'),
                   column("direccion"),
                   column("email"),
                   column("password"),
-                  column("telefono"),
                   column("fecha_registro")
                   )
 
-    def setUsuario(self, Nombre, Documento, Direccion, Email, Password, Telefono):
+    def setUsuario(cls, Nombre, Apellido, Documento, Direccion, Email, Password):
         db=Database()
 
         NewUsuario=db.insert(cls.usuarios,return_id=False,
                              id=Documento,
                              nombre=Nombre,
+                             apellido=Apellido,
                              direccion=Direccion,
                              email=Email,
                              password=Password,
-                             telefono=Telefono,
                              fecha_registro="NOW()"
                              )
 

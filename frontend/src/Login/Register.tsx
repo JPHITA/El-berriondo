@@ -13,6 +13,7 @@ function PanRegister() {
     }
 
     const [nombre,setNombre]=useState("");
+    const [apellido,setApellido]=useState("");
     const [documento,setDocumento]=useState("");
     const [correo, setCorreo] = useState("");
     const [direccion,setDireccion]=useState("");
@@ -31,6 +32,11 @@ function PanRegister() {
                         <div className="Input">
                             <img src="" alt="" />
                             <input type="text" placeholder="Nombre" onChange={(e)=>setNombre(e.target.value)} />
+                        </div>
+
+                        <div className="Input">
+                            <img src="" alt="" />
+                            <input type="text" placeholder="Apellido" onChange={(e)=>setApellido(e.target.value)} />
                         </div>
 
                         <div className="Input">

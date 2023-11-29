@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     email VARCHAR(50),
+    direccion VARCHAR(50),
     password VARCHAR(50),
     fecha_registro TIMESTAMP
 );

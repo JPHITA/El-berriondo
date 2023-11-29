@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "is-docker": "^3.0.0",
+    "react-data-table-component": "^7.5.4"
+  }
+}
