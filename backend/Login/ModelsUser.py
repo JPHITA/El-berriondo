@@ -43,7 +43,17 @@ class User:
 
         return datoU
 
+    def loginChecker(self,Email,Password):
+        db=Database()
+        SQL="""
+        SELECT *
+        FROM usuarios
+        WHERE email=Email
+        AND password=Password;
+        """
+        DatoP=db.query(SQL,Email,Password)
 
-
-
-
+        if DatoP.len!=0:
+            return True
+        else:
+            return False
