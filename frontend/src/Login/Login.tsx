@@ -61,7 +61,6 @@ function PanLogin() {
                         <div className="submitRedirigir" onClick={handleIniciarSesion}>Iniciar sesion</div>
                     </div>
                 </div>
-
             </div>
         </>
 
