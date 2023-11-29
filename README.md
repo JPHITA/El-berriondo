@@ -20,4 +20,17 @@ npm install
 npm run dev
 ```
 
+---
+usuarios para entrar a la aplicacion
+
+Email: "admin@gmail.com"
+
+Contraseña: "admin"
+
+Email: "User@gmail.com"
+
+Contraseña: "user"
+
+--
+
 **por defecto el proyecto corre en el puerto 5173**

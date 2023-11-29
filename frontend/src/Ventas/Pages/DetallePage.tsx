@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { Header } from '../components/Header';
@@ -8,13 +8,16 @@ import { MultiRecomendacionProd } from "../components/MultiRecomendacionProd.tsx
 import { InfoProducto } from "../components/InfoProducto.tsx";
 import { ButtonAgregarProd } from "../components/ButtonAgregarProd.tsx";
 
-import { GetProducto } from "./../Utils.ts";
 import { addProductoCarrito, isInCarrito, getCarrito, lengthCarrito } from "./../../services/carrito.ts";
+import { Producto } from '../../types.ts';
+
+import { fetchBackend } from '../../services/backend.ts';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
 import "./../../assets/Ventas/css/DetallePage.css"
+
 
 /*
 cuando hay stock:
@@ -29,27 +32,58 @@ cuando no hay stock:
     - se muestra 4 recomendaciones de producto
 */
 
+const Dummyproducto: Producto = {
+    id: -1,
+    nombre: "",
+    descripcion_corta: "",
+    descripcion_larga: "",
+    precio: 1000,
+    stock: -1,
+    urlimg: "https://cdn-icons-png.flaticon.com/512/8676/8676496.png",
+    categorias: undefined
+}
+
+
 export const DetallePage = () => {
     const { idProducto } = useParams(); // id del producto a mostrar
     const location = useLocation();
     const [_, forceUpdate] = useReducer(x => x + 1, 0); // para actualizar cuando se añade al carrito
-    
+
+    const excludeProds = useRef<number[]>([parseInt(idProducto!)]); // para excluir productos de las recomendaciones
+    excludeProds.current[0] = parseInt(idProducto!);
+
     const [cant_a_llevar, setCant_a_llevar] = useState<number>(1); // estado para la cantidad a llevar
-    const [producto, setProducto] = useState(GetProducto(idProducto!)); // estado para el producto a mostrar
-    
-    // si el producto a mostrar cambia, cambiar el producto a mostrar (pasaba que renderizaba con el valor anterior de producto)
-    if (producto.id != parseInt(idProducto!)) setProducto(GetProducto(idProducto!));
+    const [producto, setProducto] = useState<Producto>(Dummyproducto); // estado para el producto a mostrar
 
-    // para setear la cantidad a llevar
     useEffect(function () {
-        setProducto(GetProducto(idProducto!));
 
-        if (isInCarrito(producto.id)) {
-            setCant_a_llevar(getCarrito()[producto.id]);
-        } else {
-            setCant_a_llevar(1);
-        }
-    }, [location]);
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+        
+        // obtener el producto desde el backend
+        fetchBackend(`/Ventas/getProducto/${idProducto}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            signal: signal
+        }).then(async (res) => {
+            const data: Producto = await res.json();
+
+            if (isInCarrito(data.id)) {
+                setCant_a_llevar(getCarrito()[data.id]);
+            } else {
+                setCant_a_llevar(1);
+            }
+            
+            setProducto(data);
+        }).catch(err => {
+            console.log(err);
+        });
+
+        return () => { abortController.abort() }
+        
+    }, [location, idProducto]);
 
     // ### funciones para manejar los eventos de los componentes ###
     function handleAgregarAlCarrito() {
@@ -153,7 +187,11 @@ export const DetallePage = () => {
                                         <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
                                     </Row>
 
-                                    <MultiRecomendacionProd height={138} />
+                                    <MultiRecomendacionProd height={138}
+                                    excludeIdProds={excludeProds.current}
+                                    categorias={producto.categorias}
+                                    nombre={producto.nombre}
+                                    />
                                 </>
                         }
 
@@ -174,7 +212,11 @@ export const DetallePage = () => {
                             producto.stock > 0 ?
                                 <>
                                     <h5 style={{ color: "gray" }}>Tal vez te interese</h5>
-                                    <RecomendacionProd height={150} />
+                                    <RecomendacionProd height={150}
+                                    excludeProds={excludeProds.current}
+                                    categorias={producto.categorias}
+                                    nombre={producto.nombre}
+                                    />
                                 </>
 
                                 : // else

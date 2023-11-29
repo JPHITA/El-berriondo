@@ -20,16 +20,17 @@ export const ButtonAgregarProd = (props: ButtonAgregarProdProps) => {
 
     // estado para manejar el texto del boton
     const [infoBotonCarrito, setInfoBotonCarrito] = useState(agregar);
-
+    
     // cuando cambia la ubicacion, cambiar el texto del boton segun si esta o no en el carrito
     useEffect(() => {
+        
         if (isInCarrito(props.idProducto)) {
             setInfoBotonCarrito(agregado);
         } else {
             setInfoBotonCarrito(agregar);
         }
 
-    }, [location]);
+    }, [location, props.idProducto]);
 
     return (
         <>

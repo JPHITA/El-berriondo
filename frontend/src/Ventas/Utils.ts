@@ -1,4 +1,7 @@
-import { MockProductos, Producto } from "./Mocks/Productos.ts";
+// BORRAR ARCHIVO
+
+import { MockProductos } from "./Mocks/Productos.ts";
+import { Producto } from "./../types.ts";
 
 function RandomProducto(): Producto {
     return MockProductos[Math.floor(Math.random() * MockProductos.length)];
@@ -7,7 +10,7 @@ function RandomProducto(): Producto {
 function GetProducto(id: number | string): Producto {
     const idP: string = id.toString();
 
-    return MockProductos.find((producto) => producto.id === parseInt(idP))!;
+    return MockProductos.find((producto: Producto) => producto.id === parseInt(idP))!;
 }
 
 export {

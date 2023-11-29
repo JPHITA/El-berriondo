@@ -1,37 +1,94 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Row, Col, Button, Container, Card } from 'react-bootstrap';
-import { CloseButton } from 'react-bootstrap';
+import { Row, Col, Button, Container } from 'react-bootstrap';
 
 import { Header } from "./../components/Header.tsx";
-import { InfoProducto } from "./../components/InfoProducto.tsx";
-import { SetterCantidadProd } from "./../components/SetterCantidadProd.tsx";
+import { CardProductoCarrito } from "../components/CardProductoCarrito.tsx";
 import { RecomendacionProd } from "./../components/RecomendacionProd.tsx";
 
-import { getCarrito, editProductoCarrito, removeProductoCarrito, lengthCarrito, setCarrito as setCarritoMemory } from "./../../services/carrito.ts";
-import { GetProducto } from "./../Utils.ts";
+import { getCarrito, lengthCarrito, clearCarrito } from "./../../services/carrito.ts";
+
+import { fetchBackend } from '../../services/backend.ts';
+import { Producto } from "../../types.ts";
 
 export const CarritoPage = () => {
     const navigate = useNavigate();
 
     const [carrito, setCarrito] = useState(getCarrito()); // estado para manejar el carrito
-    const [precioTotal, setPrecioTotal] = useState(0); // estado para manejar el precio total
+    const [productosCarrito, setProductosCarrito] = useState<Producto[]>(); // estado para manejar los productos del carrito
+    const [precioTotal, setPrecioTotal] = useState(0); // estado para manejar el precio total del carrito
 
-    // cuando cambia el carrito, calcular el precio total
+    const excludeProds = useRef<number[]>([]); // se excluyen de la publicidad, los productos que ya estan en el carrito
+
+    const idUsuario = 2; // TODO: obtener el id del usuario logueado
+
     useEffect(function(){
-        let precioTotal = 0;
-        for (const [id, cantidad] of Object.entries(carrito)) {
-            const producto = GetProducto(id);
-            precioTotal += producto.precio * cantidad;
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+
+        if (lengthCarrito() > 0) {
+            fetchBackend("/Ventas/getProductos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "idProds": Object.keys(carrito).map((id) => parseInt(id))
+                }),
+                signal: signal
+            }).then(async(res) => {
+
+                    const data: Producto[] = await res.json();
+                    setProductosCarrito(data);
+                    setPrecioTotal( data.reduce((prev, p) => prev + (p.precio * carrito[p.id]), 0) );
+
+                }).catch((err) => {
+                    console.log(err);
+                });
         }
-        setPrecioTotal(precioTotal);
+
+        excludeProds.current = Object.keys(carrito).map(id => parseInt(id));
+
+        return () => { abortController.abort(); }
+        
+    }, []);
+
+    useEffect(function(){
+        // actualiza los productos con los que estan en el carrito
+        const nuevosProductosCarrito = productosCarrito?.filter((p) => p.id in carrito);
+
+        // actualiza el precio total de los productos que estan en el carrito
+        const precioNuevo = nuevosProductosCarrito?.reduce((prev, p) => prev + (p.precio * carrito[p.id]), 0) || 0;
+        setPrecioTotal(precioNuevo);
+        
+
+        setProductosCarrito(nuevosProductosCarrito);
     }, [carrito]);
 
-    function handleComprar() {
-        alert("Comprado!");
-        setCarritoMemory({});
+    function handleComprar(){
 
+        fetchBackend("/Ventas/SaveVenta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "idUsuario": idUsuario,
+                "productos": productosCarrito?.map(p => ({
+                    "idProducto": p.id,
+                    "cantidad": carrito[p.id] || 0,
+                    "precio": p.precio
+                }))
+            })
+        }).then(async(res) => {
+                const data = await res.text();
+                console.log(data);
+            }).catch((err) => {
+                console.log(err);
+        })
+
+        clearCarrito();
         navigate("/Ventas/Principal");
     }
 
@@ -43,90 +100,33 @@ export const CarritoPage = () => {
                 <Row className="justify-content-around mb-3">
                     <Col lg={8} md={5} sm={12} className="text-center">
                         <h4>Precio total: ${precioTotal.toLocaleString()}</h4>
-
                     </Col>
 
                     <Col lg={4} md={5} sm={12}>
                         <div className="d-grid gap-2">
-                            <Button variant="success" size="lg" onClick={handleComprar}>
+                            <Button variant="success" size="lg" onClick={handleComprar} disabled={lengthCarrito() === 0}>
                                 Realizar Compra
                             </Button>
                         </div>
                     </Col>
                 </Row>
 
-                {Object.entries(carrito).map(([id, cantidad]) => {
-
-                    const producto = GetProducto(parseInt(id));
-
-                    return (
-                        <Row className="mb-2 align-items-center" key={id}>
-                            <Col md={10} sm={12}>
-                                <Card>
-                                    <Card.Header>
-                                        <Row>
-
-                                            <Col xs={10} md={11}>
-                                                <h5>{producto.nombre}</h5>
-                                            </Col>
-
-                                            <Col xs={2} md={1}>
-                                                <CloseButton
-                                                    onClick={() => {
-                                                        removeProductoCarrito(producto.id);
-                                                        setCarrito(getCarrito());
-                                                    }}
-                                                />
-                                            </Col>
-
-                                        </Row>
-                                    </Card.Header>
-
-                                    <Card.Body>
-                                        <Row>
-
-                                            <Col xs={12} md={3} className="text-center">
-                                                <img src={producto.urlimg} alt={producto.nombre} style={ {height: "110px"} } className="img-fluid" />
-                                            </Col>
-
-                                            <InfoProducto
-                                                xs={12} md={6}
-                                                descripcion={producto.descripcion_corta}
-                                            />
-
-                                            <Col xs={12} md={3} className="text-center">
-                                                <h3>${(producto.precio*cantidad).toLocaleString()}</h3>
-                                            </Col>
-
-                                        </Row>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-
-                            <Col md={2} sm={12} className="text-center mb-2">
-                                <SetterCantidadProd
-                                    cantActual={cantidad}
-                                    handleDisminuir={() => {
-                                        editProductoCarrito(producto.id, Math.max(1, cantidad - 1));
-                                        setCarrito(getCarrito());
-                                    }}
-                                    handleAumentar={() => {
-                                        editProductoCarrito(producto.id, Math.min(producto.stock, cantidad + 1));
-                                        setCarrito(getCarrito());
-                                    }}
-                                />
-                            </Col>
-                        </Row>
-                    )
-                })}
+                {productosCarrito?.map((producto, i) => (
+                    <CardProductoCarrito
+                        key={i}
+                        producto={producto}
+                        cantidad={carrito[producto.id]}
+                        setCarritoState={setCarrito}
+                    />
+                ))}
 
                 <Row>
                     <Col>
-                        <RecomendacionProd height={120} />
+                        <RecomendacionProd height={120} excludeProds={excludeProds.current}/>
                     </Col>
 
                     <Col>
-                        <RecomendacionProd height={120} />
+                        <RecomendacionProd height={120} excludeProds={excludeProds.current}/>
                     </Col>
                 </Row>
 

@@ -1,0 +1,14 @@
+
+# Use the official PostgreSQL image as the base image
+FROM postgres:16
+
+# Set the environment variables for the PostgreSQL server
+ENV POSTGRES_USER admin
+ENV POSTGRES_PASSWORD adminps
+ENV POSTGRES_DB ElBerriondo
+
+# Expose port 5432 for incoming connections
+EXPOSE 5432
+
+# Copy the SQL script to initialize the database
+COPY ./ddl.sql /docker-entrypoint-initdb.d/

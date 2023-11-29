@@ -1,0 +1,25 @@
+@media (min-width: 768px){
+    .show-on-md {
+        display: block;
+    }
+
+    .show-on-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .show-on-md {
+        display: none;
+    }
+
+    .show-on-sm {
+        display: block;
+    }
+}
+
+
+.activado {
+    background-color: #02a01f;
+    color: white;
+}
