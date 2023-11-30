@@ -4,11 +4,32 @@ import {Button, Col, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import {useState} from "react";
+import {fetchBackend} from "../services/backend.ts";
 
  export default function NuevaContraseña(){
     const navigate =useNavigate();
     const NavPanLogin=() =>{
         navigate('/Login')
+    }
+    function handleNewPassword(){
+        if (contraseña===contrasena_confirm){
+            fetchBackend('/Login/newPassword',{
+                method: 'get',
+                headers:{
+                    "content-type":"application.json"
+                },
+                body:JSON.stringify({
+                    "password":contraseña
+                })
+            }).then(async (res)=>{
+                const Response=await res.text()
+                console.log(Response)
+
+                if (Response){
+                    NavPanLogin
+                }
+            })
+        }
     }
      const [contraseña, setPassword] = useState("");
      const [contrasena_confirm,setConfirmPassword]=useState("");
@@ -39,7 +60,7 @@ import {useState} from "react";
                             <label htmlFor="email">Confirmar contraseña</label>
                         </Form>
                         <Col className="text-center py-3">
-                            <Button className="login-btn" onClick={NavPanLogin}>Guardar y volver a inicio</Button>
+                            <Button className="login-btn" onClick={handleNewPassword}>Guardar y volver a inicio</Button>
                         </Col>
                     </Col>
                 </Col>

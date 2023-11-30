@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {Button, Col, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
+import {fetchBackend} from "../services/backend.ts";
 
 function PanRegister() {
     const navigate = useNavigate();
@@ -12,6 +13,36 @@ function PanRegister() {
     }
     const NavPanLogin=()=>{
         navigate('/Login')
+    }
+    function handleRegister(){
+        if (contraseña===contrasena_confirm) {
+
+            fetchBackend("/Login/handleRegister", {
+                method: "get",
+                headers: {
+                    "content-type": "application.json"
+                },
+                body: JSON.stringify({
+                    "nombre": nombre,
+                    "apellido": apellido,
+                    "id": documento,
+                    "email": correo,
+                    "direccion": direccion,
+                    "password": contraseña
+                })
+            }).then(async (res) => {
+                const Response = await res.text()
+                console.log(Response)
+
+                if (Response) {
+                    NavRegistro
+                } else {
+                    alert("el usuario ya existe")
+                }
+            })
+        }else{
+            alert("las contraseñas no coinciden")
+        }
     }
 
     const [nombre,setNombre]=useState("");
@@ -70,7 +101,7 @@ function PanRegister() {
                             <Button className="register-btn" onClick={NavPanLogin}> Iniciar sesion</Button>
                         </Col>
                         <Col className="text-center py-3">
-                            <Button className="login-btn" onClick={NavRegistro}>Registrate</Button>
+                            <Button className="login-btn" onClick={handleRegister}>Registrate</Button>
                         </Col>
                     </Col>
                 </Col>

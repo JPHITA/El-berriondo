@@ -1,9 +1,10 @@
 from flask import Blueprint, request
 from flask_restful import Api, Resource
-from Login.ModelsUser import User
+from ModelsUser import User
 
 Login = Blueprint('Login', __name__, url_prefix='/Login')
 api = Api(Login)
+
 
 class handleRegister(Resource):
 
@@ -19,19 +20,22 @@ class handleRegister(Resource):
         -codigo 0: el usuario no existe (se puede hacer el registro)
         """
 
-        params=request.get_json(silent=True) or dict()
+        params = request.get_json(silent=True) or dict()
 
-        Nombre=params['Nombre']
+        Nombre = params['nombre']
 
-        Usu=User.getUsuario(Nombre)
+        Usu = User.getUsuario(Nombre)
 
-        if Usu.len!=0:
-            return 1
+        if Usu.len != 0:
+            return False
         else:
-            User.setUsuario(params.get('Nombre'),params.get('Apellido'), params.get('Documento'), params.get('Direccion'), params.get('Email'), params.get('Password'))
-            return 0
+            User.setUsuario(params.get('nombre'), params.get('apellido'), params.get('id'), params.get('direccion'),
+                            params.get('email'), params.get('password'))
+            return True
+
 
 api.add_resource(handleRegister, '/handleRegister')
+
 
 class handleLogin(Resource):
     def get(self):
@@ -46,16 +50,47 @@ class handleLogin(Resource):
         -False: Email o password incorrectos
         -True: Los datos concuerdan, se procede al redirect
         """
-        params=request.get_json(silent=True) or dict()
+        params = request.get_json(silent=True) or dict()
 
-        Email=params['Email']
-        Password=params['Password']
+        Email = params['email']
+        Password = params['password']
 
-        Usu=User.loginChecker(Email,Password)
+        Usu = User.loginChecker(Email, Password)
 
         if Usu:
             return True
         else:
             return False
 
+
 api.add_resource(handleLogin, '/handleLogin')
+
+
+class newPassword(Resource):
+    def get(self):
+        params = request.get_json(silent=True) or dict()
+
+        Usu = User.updateUsuarioPassword(params)
+
+        if Usu:
+            return True
+        else:
+            return False
+
+
+api.add_resource(newPassword, '/newPassword')
+
+
+class userQuery(Resource):
+    def get(self):
+        params = request.get_json(silent=True) or dict()
+
+        Usu = User.GetUsuarioId(params.get('id'))
+
+        if params.get('id') == Usu.get('id') and params.get('correo') == Usu.get('correo'):
+            return True
+        else:
+            return False
+
+
+api.add_resource((userQuery, '/userQuery'))

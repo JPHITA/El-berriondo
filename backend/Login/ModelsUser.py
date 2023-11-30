@@ -1,4 +1,4 @@
-from utils.Database import Database
+from backend.utils.Database import Database
 from sqlalchemy import table, column
 
 
@@ -7,8 +7,8 @@ class User:
                      column("id"),
                      column("nombre"),
                      column('apellido'),
-                     column("direccion"),
                      column("email"),
+                     column("direccion"),
                      column("password"),
                      column("fecha_registro")
                      )
@@ -21,8 +21,8 @@ class User:
                                id=Documento,
                                nombre=Nombre,
                                apellido=Apellido,
-                               direccion=Direccion,
                                email=Email,
+                               direccion=Direccion,
                                password=Password,
                                fecha_registro="NOW()"
                                )
@@ -45,6 +45,19 @@ class User:
 
         return datoU
 
+    def GetUsuarioId(self, id):
+        db=Database()
+
+        SQL = """
+        SELECT *
+        FROM usuarios 
+        WHERE id='Id';
+            """
+
+        UID=db.query(SQL,id)
+
+        return UID
+
     def loginChecker(self, Email, Password):
         db = Database()
         SQL = """
@@ -56,6 +69,25 @@ class User:
         DatoP = db.query(SQL, Email, Password)
 
         if DatoP.len != 0:
+            return True
+        else:
+            return False
+
+    def updateUsuarioPassword(self,args):
+        db=Database()
+
+        SQL="""
+        UPDATE usuarios
+        
+        SET
+            password = 'arg'
+        
+        WHERE id='id'       
+        """
+
+        Update=db.execute(SQL,args)
+
+        if Update:
             return True
         else:
             return False

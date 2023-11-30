@@ -2,9 +2,9 @@ import './LoginCss.css'
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { Row, Col, Button} from 'react-bootstrap';
-import { MockUsuarios } from '../Ventas/Mocks/MockUsuarios';
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
+import {fetchBackend} from "../services/backend.ts";
 
 function PanLogin() {
     const navigate = useNavigate();
@@ -15,21 +15,32 @@ function PanLogin() {
         navigate('/Register')
     }
 
-    function handleIniciarSesion(){
-        let usuario = MockUsuarios.find(usuario => usuario.Email === correo && usuario.Password === Password);
+    function handleLogin(){
+        fetchBackend("/Login/handleLogin",{
+            method: "get",
+            headers:{
+                "content-type": "application.json"
+            },
+            body:JSON.stringify({
+                "email":correo,
+                "password": Password
+            })
+        }).then(async (res) =>{
+            const Response= await res.text()
+            console.log(Response)
 
-        if(usuario === undefined){
-            alert("Usuario o contraseña incorrectos");
-            return;
-        }
+            if (Response=== undefined){
+                alert("Usuario o contraseña incorrectos")
+            }
 
-        sessionStorage.setItem("usuario", JSON.stringify(usuario));
+            if (Response){
+                navigate('/listadoProductos')
+            }else{
+                navigate('/Ventas/Principal')
+            }
+            }
 
-        if(usuario.Privilege){
-            navigate('/listadoProductos');
-        }else{
-            navigate('/Ventas/Principal');
-        }
+        )
 
     }
 
@@ -67,7 +78,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
+                        <Button className="login-btn" onClick={handleLogin}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>
