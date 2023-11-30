@@ -49,7 +49,7 @@ function PanLogin() {
 
             </Col>
                 <Col className="col-6">
-                    <h4 className="Login text-center">Iniciar sesion</h4>
+                    <h4 className="Login text-center">Iniciar sesión</h4>
                 <Form className="form-floating mb-1">
                     <input type="email" className="form-control" id="email" placeholder="Correo electronico" onChange={(e)=> setCorreo(e.target.value)}/>
                     <label htmlFor="email">Correo Electronico</label>
@@ -59,7 +59,7 @@ function PanLogin() {
                         <label htmlFor="password">Contraseña</label>
                     </Form>
                     <Col className="text-center mb-3">
-                        <h6 className="Forgetpassword" onClick={NavRecCuenta}>Olvide mi contraseña</h6>
+                        <h6 className="Forgetpassword" onClick={NavRecCuenta}>Olvidé mi contraseña</h6>
                     </Col>
                     <Col className="text-center">
                         <h6>No tienes cuenta?</h6>
@@ -68,7 +68,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesion</Button>
+                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>

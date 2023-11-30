@@ -53,7 +53,7 @@ function PanRegister() {
                         </Form>
                         <Form className="form-floating mb-1">
                             <input type="text" className="form-control" id="direccion" placeholder="Tu direccion" onChange={(e)=> setDireccion(e.target.value)}/>
-                            <label htmlFor="direccion">Direccion</label>
+                            <label htmlFor="direccion">Dirección</label>
                         </Form>
                         <Form className="form-floating mb-1">
                             <input type="password" className="form-control" id="password" placeholder="Password" onChange={(e)=> setPassword(e.target.value)}/>
