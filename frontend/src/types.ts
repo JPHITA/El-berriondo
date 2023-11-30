@@ -13,4 +13,12 @@ export interface Producto {
 export interface Categoria{
     id: number,
     nombre: string,
+    fecha_registro: string,
+}
+
+export interface Venta {
+    id: number;
+    id_usuario: number;
+    estado: string;
+    fecha_registro: Date;
 }

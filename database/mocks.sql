@@ -44,3 +44,29 @@ INSERT INTO categorias_productos (id_categoria, id_producto) VALUES
 (3, 14),
 (2, 15),
 (4, 16);
+
+
+INSERT INTO ventas (id_usuario, estado, fecha_registro) VALUES
+(2, 'Completada', '2022-05-10'),
+(2, 'En proceso', '2023-07-19'),
+(2, 'Cancelada', '2022-08-12'),
+(2, 'Completada', '2021-03-04'),
+(2, 'Cancelada', '2020-02-25');
+
+INSERT INTO ventas_productos (id_venta, id_producto, cantidad, precio) VALUES
+(1, 1, 1, 470708),
+(1, 2, 2, 72693),
+(2, 3, 1, 241990),
+(2, 4, 4, 394475),
+(2, 5, 1, 239725),
+(3, 6, 2, 41601),
+(3, 7, 3, 177234),
+(3, 8, 3, 175711),
+(3, 9, 1, 202919),
+(3, 10, 2, 484023),
+(4, 11, 2, 268314),
+(5, 12, 1, 220979),
+(5, 13, 1, 186857),
+(5, 14, 1, 421963),
+(5, 15, 3, 303046),
+(5, 16, 1, 169792);
