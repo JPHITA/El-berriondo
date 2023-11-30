@@ -4,6 +4,7 @@ import {Button, Col, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import {useState} from "react";
+
 function RecuperarCuenta(){
     const navigate=useNavigate()
     const NavNewContra=()=>{

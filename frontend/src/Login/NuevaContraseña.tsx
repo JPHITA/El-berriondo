@@ -4,6 +4,7 @@ import {Button, Col, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import {useState} from "react";
+
  export default function NuevaContraseña(){
     const navigate =useNavigate();
     const NavPanLogin=() =>{

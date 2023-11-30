@@ -2,7 +2,6 @@ import './LoginCss.css'
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { Row, Col, Button} from 'react-bootstrap';
-
 import { MockUsuarios } from '../Ventas/Mocks/MockUsuarios';
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
