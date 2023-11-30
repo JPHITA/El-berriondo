@@ -10,7 +10,8 @@ class User:
                      column("email"),
                      column("direccion"),
                      column("password"),
-                     column("fecha_registro")
+                     column("fecha_registro"),
+                     column("privilege")
                      )
 
     @classmethod
@@ -24,7 +25,8 @@ class User:
                                email=Email,
                                direccion=Direccion,
                                password=Password,
-                               fecha_registro="NOW()"
+                               fecha_registro="NOW()",
+                               privilege=False
                                )
 
         db.commit()
