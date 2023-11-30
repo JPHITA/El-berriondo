@@ -26,14 +26,15 @@ function PanLogin() {
                 "password": Password
             })
         }).then(async (res) =>{
-            const Response= await res.text()
+            const Response= await res.json()
             console.log(Response)
 
             if (Response=== undefined){
                 alert("Usuario o contraseña incorrectos")
             }
 
-            if (Response){
+            sessionStorage.setItem("usuario",Response)
+            if (Response.privlege){
                 navigate('/listadoProductos')
             }else{
                 navigate('/Ventas/Principal')

@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     email VARCHAR(50),
     direccion VARCHAR(50),
     password VARCHAR(50),
-    fecha_registro TIMESTAMP
+    fecha_registro TIMESTAMP,
+    privilege BOOLEAN
 );
 
 -- tabla productos

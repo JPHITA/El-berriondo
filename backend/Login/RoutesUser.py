@@ -58,7 +58,7 @@ class handleLogin(Resource):
         Usu = User.loginChecker(Email, Password)
 
         if Usu:
-            return True
+            return Usu
         else:
             return False
 
@@ -88,7 +88,7 @@ class userQuery(Resource):
         Usu = User.GetUsuarioId(params.get('id'))
 
         if params.get('id') == Usu.get('id') and params.get('correo') == Usu.get('correo'):
-            return True
+            return Usu
         else:
             return False
 

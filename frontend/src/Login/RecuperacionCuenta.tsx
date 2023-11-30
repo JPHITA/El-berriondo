@@ -22,7 +22,7 @@ function RecuperarCuenta(){
                 'id':documento
             })
         }).then(async (res)=>{
-            const Response=await res.text()
+            const Response=await res.json()
             console.log(Response)
 
             if (Response){
