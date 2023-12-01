@@ -1,4 +1,4 @@
-from backend.utils.Database import Database
+from utils.Database import Database
 from sqlalchemy import table, column
 
 

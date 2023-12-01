@@ -17,7 +17,7 @@ function PanLogin() {
 
     function handleLogin(){
         fetchBackend("/Login/handleLogin",{
-            method: "get",
+            method: "POST",
             headers:{
                 "content-type": "application.json"
             },

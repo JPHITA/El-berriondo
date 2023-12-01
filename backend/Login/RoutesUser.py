@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_restful import Api, Resource
-from ModelsUser import User
+from Login.ModelsUser import User
 
 Login = Blueprint('Login', __name__, url_prefix='/Login')
 api = Api(Login)
@@ -38,7 +38,7 @@ api.add_resource(handleRegister, '/handleRegister')
 
 
 class handleLogin(Resource):
-    def get(self):
+    def post(self):
         """
         Obtiene el email y password introducidos en el login form y verifica con la base de datos que los datos sean correctos
 
@@ -93,4 +93,4 @@ class userQuery(Resource):
             return False
 
 
-api.add_resource((userQuery, '/userQuery'))
+api.add_resource(userQuery, '/userQuery')
