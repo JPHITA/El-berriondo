@@ -25,7 +25,7 @@ function RecuperarCuenta(){
             const Response=await res.json()
             console.log(Response)
 
-            if (Response){
+            if (Response.email === correo && Response.id === documento){
                 NavNewContra
             }else{
                 alert('no existe una cuenta con estos datos')
