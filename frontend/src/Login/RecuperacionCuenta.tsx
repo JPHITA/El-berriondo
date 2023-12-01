@@ -18,7 +18,7 @@ function RecuperarCuenta(){
 
 
             fetchBackend('/Login/userQuery', {
-                method: 'get',
+                method: 'POST',
                 headers: {
                     'content-type': 'application.json'
                 },

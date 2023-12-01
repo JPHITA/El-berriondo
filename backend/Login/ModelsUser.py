@@ -32,7 +32,7 @@ class User:
         db.commit()
         db.close()
 
-    def getUsuario(self, Nombre):
+    def getUsuario(Nombre):
         db = Database()
 
         SQL = """
@@ -47,7 +47,7 @@ class User:
 
         return datoU
 
-    def GetUsuarioId(self, id):
+    def GetUsuarioId(id):
         db=Database()
 
         SQL = """
@@ -60,7 +60,7 @@ class User:
 
         return UID
 
-    def loginChecker(self, Email, Password):
+    def loginChecker(Email, Password):
         db = Database()
         SQL = """
         SELECT *
@@ -70,10 +70,14 @@ class User:
         """
         DatoP = db.query(SQL, email=Email, password=Password)
 
-        if DatoP.len != 0:
-            return True
+        if len(DatoP)>0:
+
+            if DatoP[0] == Email:
+                return DatoP
+            else:
+                return 0
         else:
-            return False
+            return 0
 
     def updateUsuarioPassword(self,args,Id):
         db=Database()
@@ -87,9 +91,7 @@ class User:
         WHERE id=:id      
         """
 
-        Update=db.execute(SQL,password=args,id=Id)
-
-        if Update:
-            return True
+        if db.execute(SQL,password=args,id=Id):
+            return "Succesful"
         else:
-            return False
+            return "Failed"

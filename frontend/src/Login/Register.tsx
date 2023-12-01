@@ -22,7 +22,7 @@ function PanRegister() {
             if (contraseña === contrasena_confirm) {
 
                 fetchBackend("/Login/handleRegister", {
-                    method: "get",
+                    method: "POST",
                     headers: {
                         "content-type": "application.json"
                     },
@@ -35,12 +35,12 @@ function PanRegister() {
                         "password": contraseña
                     })
                 }).then(async (res) => {
-                    const Response = await res.text()
-                    console.log(Response)
+                    const Response = await res.json()
 
-                    if (Response) {
+                    if (Response==="Created") {
                         NavRegistro
-                    } else {
+
+                    } else if (Response==="Exist") {
                         alert("el usuario ya existe")
                     }
                 })

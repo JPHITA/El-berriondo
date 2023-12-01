@@ -9,7 +9,8 @@ import {fetchBackend} from "../services/backend.ts";
  export default function NuevaContraseña(){
     const navigate =useNavigate();
     var string = sessionStorage.getItem("usuario");
-    var usuario= JSON.parse(string)
+    // @ts-ignore
+     var usuario= JSON.parse(string)
 
     const NavPanLogin=() =>{
         navigate('/Login')
@@ -21,7 +22,7 @@ import {fetchBackend} from "../services/backend.ts";
 
             if (contraseña === contrasena_confirm) {
                 fetchBackend('/Login/newPassword', {
-                    method: 'get',
+                    method: 'POST',
                     headers: {
                         "content-type": "application.json"
                     },

@@ -8,7 +8,7 @@ api = Api(Login)
 
 class handleRegister(Resource):
 
-    def get(self):
+    def post(self):
         """
         Comprueba los datos introducidos en el form con las instancias de usuarios presentes en la DB
 
@@ -22,17 +22,17 @@ class handleRegister(Resource):
 
         params = request.get_json(silent=True) or dict()
 
-        Nombre = params['nombre']
+        Nombre = params.get("nombre")
 
         Usu = User.getUsuario(Nombre)
 
-        if Usu.len != 0:  # Si la lista no es vacia, significa que el usuario ya existe en la BD / no se puede crear
+        if len(Usu) != 0:  # Si la lista no es vacia, significa que el usuario ya existe en la BD / no se puede crear
             # otro user con los mismos datos
-            return False
+            return "Exist"
         else:  # No hay user con estos datos, se procede a crearlo
-            User.setUsuario(params.get('nombre'), params.get('apellido'), params.get('id'), params.get('direccion'),
-                            params.get('email'), params.get('password'))
-            return True
+            User.setUsuario(params.get("nombre"), params.get("apellido"), params.get("id"), params.get("direccion"),
+                            params.get("email"), params.get("password"))
+            return "Created"
 
 
 api.add_resource(handleRegister, '/handleRegister')
@@ -53,27 +53,27 @@ class handleLogin(Resource):
         """
         params = request.get_json(silent=True) or dict()
 
-        Email = params['email']
-        Password = params['password']
+        Email = params.get('email')
+        Password = params.get('password')
 
         Usu = User.loginChecker(Email, Password)
 
-        if Usu:  # si el usuario existe, se retorna para ser añadido a session storage
+        if Usu != 0:
             return Usu
         else:
-            return False
+            return "None"
 
 
 api.add_resource(handleLogin, '/handleLogin')
 
 
 class newPassword(Resource):
-    def get(self):
+    def post(self):
         params = request.get_json(silent=True) or dict()
 
         Usu = User.updateUsuarioPassword(params.get("password"),params.get("id"))
 
-        if Usu:
+        if Usu == "Succesful":
             return True
         else:
             return False
@@ -83,13 +83,16 @@ api.add_resource(newPassword, '/newPassword')
 
 
 class userQuery(Resource):
-    def get(self):
+    def post(self):
         params = request.get_json(silent=True) or dict()
 
         Usu = User.GetUsuarioId(params.get('id'))
 
-        if params.get('id') == Usu.get('id') and params.get('correo') == Usu.get('correo'):
-            return Usu
+        if len(Usu)>0:
+            if params.get('id') == Usu[0].get('id') and params.get('correo') == Usu[0].get('email'):
+                return Usu
+            else:
+                return False
         else:
             return False
 

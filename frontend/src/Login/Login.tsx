@@ -41,7 +41,6 @@ function PanLogin() {
         }
         else {
 
-
             fetchBackend("/Login/handleLogin", {
                 method: "POST",
                 headers: {
@@ -55,7 +54,7 @@ function PanLogin() {
                     const Response = await res.json()
                     console.log(Response)
 
-                    if (Response === undefined) {
+                    if (Response === "None") {
                         alert("Usuario o contraseña incorrectos")
                     }
                     sessionStorage.setItem("loggedIn","")
@@ -107,7 +106,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
+                        <Button className="login-btn" onClick={handleLogin}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>
