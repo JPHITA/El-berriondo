@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { fetchBackend } from '../../services/backend.ts';
 
 import { Producto, Categoria } from '../../types.ts';
+import {useNavigate} from "react-router-dom";
 
 const columns = [
     {
@@ -50,6 +51,13 @@ const columns = [
 ];
 
 export const ListadoProductosPage = () => {
+    const navigate = useNavigate();
+    var Getusu=sessionStorage.getItem("usuario")
+    // @ts-ignore
+    var usuario=JSON.parse(Getusu)
+    if (sessionStorage.getItem("loggedIn")===null || !usuario.privilege){
+        navigate('/Login')
+    }
 
     const [productos, setProductos] = useState<Producto[]>([]);
     const [categorias, setCategorias] = useState<Categoria[]>([]);

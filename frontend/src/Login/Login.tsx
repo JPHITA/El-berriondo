@@ -1,18 +1,38 @@
 import './LoginCss.css'
-import { useState } from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { Row, Col, Button} from 'react-bootstrap';
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import {fetchBackend} from "../services/backend.ts";
+import { MockUsuarios } from '../Ventas/Mocks/MockUsuarios';
 
 function PanLogin() {
     const navigate = useNavigate();
+    sessionStorage.clear()
+
     const NavRecCuenta = () => {
         navigate('/Recuperarcuenta')
     }
     const NavPanRegister = () => {
         navigate('/Register')
+    }
+    function handleIniciarSesion() {
+        let usuario = MockUsuarios.find(usuario => usuario.Email === correo && usuario.Password === Password);
+
+        if (usuario === undefined) {
+            alert("Usuario o contraseña incorrectos");
+            return;
+        }
+        sessionStorage.setItem("loggedIn","")
+        sessionStorage.setItem("usuario", JSON.stringify(usuario))
+
+        if (usuario.privilege) {
+            navigate('/listadoProductos');
+        } else {
+            navigate('/Ventas/Principal');
+        }
+
     }
 
     function handleLogin(){
@@ -38,9 +58,11 @@ function PanLogin() {
                     if (Response === undefined) {
                         alert("Usuario o contraseña incorrectos")
                     }
-
+                    sessionStorage.setItem("loggedIn","")
                     sessionStorage.setItem("usuario", Response)
-                    if (Response.privlege) {
+                    const Userdata=JSON.parse(Response)
+
+                    if (Userdata.privilege) {
                         navigate('/listadoProductos')
                     } else {
                         navigate('/Ventas/Principal')
@@ -85,7 +107,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleLogin}>Iniciar sesión</Button>
+                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>

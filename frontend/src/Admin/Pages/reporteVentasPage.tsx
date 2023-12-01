@@ -8,6 +8,7 @@ import DataTable from 'react-data-table-component';
 import { fetchBackend } from '../../services/backend.ts';
 
 import { ExpandableRowVentas } from "./../Components/ExpandableRowVentas.tsx";
+import {useNavigate} from "react-router-dom";
 
 function actualizarEstados(estadoFila: string) {
     let estados: string[] = []
@@ -24,6 +25,13 @@ function actualizarEstados(estadoFila: string) {
 }
 
 export const ReporteVentasPage = () => {
+    const navigate = useNavigate();
+    var Getusu=sessionStorage.getItem("usuario")
+    // @ts-ignore
+    var usuario=JSON.parse(Getusu)
+    if (sessionStorage.getItem("loggedIn")===null || !usuario.privilege){
+        navigate('/Login')
+    }
     const [Ventas, setVentas] = useState([]);
     const [loading, setLoading] = useState(true);
 
