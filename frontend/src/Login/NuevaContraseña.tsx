@@ -12,23 +12,30 @@ import {fetchBackend} from "../services/backend.ts";
         navigate('/Login')
     }
     function handleNewPassword(){
-        if (contraseña===contrasena_confirm){
-            fetchBackend('/Login/newPassword',{
-                method: 'get',
-                headers:{
-                    "content-type":"application.json"
-                },
-                body:JSON.stringify({
-                    "password":contraseña
-                })
-            }).then(async (res)=>{
-                const Response=await res.text()
-                console.log(Response)
+        if(contraseña==="" || contrasena_confirm===""){
+            alert('por favor introduce los datos')
+        }else {
 
-                if (Response){
-                    NavPanLogin
-                }
-            })
+            if (contraseña === contrasena_confirm) {
+                fetchBackend('/Login/newPassword', {
+                    method: 'get',
+                    headers: {
+                        "content-type": "application.json"
+                    },
+                    body: JSON.stringify({
+                        "password": contraseña
+                    })
+                }).then(async (res) => {
+                    const Response = await res.text()
+                    console.log(Response)
+
+                    if (Response) {
+                        NavPanLogin
+                    }
+                })
+            } else {
+                alert('las contraseñas no coinciden')
+            }
         }
     }
      const [contraseña, setPassword] = useState("");

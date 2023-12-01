@@ -12,25 +12,31 @@ function RecuperarCuenta(){
         navigate('/Nuevacontraseña')
     }
     function handleRecCuenta(){
-        fetchBackend('/Login/userQuery',{
-            method:'get',
-            headers:{
-                'content-type':'application.json'
-            },
-            body:JSON.stringify({
-                'email':correo,
-                'id':documento
-            })
-        }).then(async (res)=>{
-            const Response=await res.json()
-            console.log(Response)
+        if (correo==="" || documento===""){
+            alert('por favor ingresa los datos')
+        }else {
 
-            if (Response.email === correo && Response.id === documento){
-                NavNewContra
-            }else{
-                alert('no existe una cuenta con estos datos')
-            }
-        })
+
+            fetchBackend('/Login/userQuery', {
+                method: 'get',
+                headers: {
+                    'content-type': 'application.json'
+                },
+                body: JSON.stringify({
+                    'email': correo,
+                    'id': documento
+                })
+            }).then(async (res) => {
+                const Response = await res.json()
+                console.log(Response)
+
+                if (Response.email === correo && Response.id === documento) {
+                    NavNewContra
+                } else {
+                    alert('no existe una cuenta con estos datos')
+                }
+            })
+        }
     }
     const [correo, setCorreo] = useState("");
     const [documento, setDocumento] = useState("");

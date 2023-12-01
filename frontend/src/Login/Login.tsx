@@ -16,32 +16,38 @@ function PanLogin() {
     }
 
     function handleLogin(){
-        fetchBackend("/Login/handleLogin",{
-            method: "POST",
-            headers:{
-                "content-type": "application.json"
-            },
-            body:JSON.stringify({
-                "email":correo,
-                "password": Password
-            })
-        }).then(async (res) =>{
-            const Response= await res.json()
-            console.log(Response)
+        if (correo==="" || Password===""){
+            alert('Por favor ingresa los datos')
+        }
+        else {
 
-            if (Response=== undefined){
-                alert("Usuario o contraseña incorrectos")
-            }
 
-            sessionStorage.setItem("usuario",Response)
-            if (Response.privlege){
-                navigate('/listadoProductos')
-            }else{
-                navigate('/Ventas/Principal')
-            }
-            }
+            fetchBackend("/Login/handleLogin", {
+                method: "POST",
+                headers: {
+                    "content-type": "application.json"
+                },
+                body: JSON.stringify({
+                    "email": correo,
+                    "password": Password
+                })
+            }).then(async (res) => {
+                    const Response = await res.json()
+                    console.log(Response)
 
-        )
+                    if (Response === undefined) {
+                        alert("Usuario o contraseña incorrectos")
+                    }
+
+                    sessionStorage.setItem("usuario", Response)
+                    if (Response.privlege) {
+                        navigate('/listadoProductos')
+                    } else {
+                        navigate('/Ventas/Principal')
+                    }
+                }
+            )
+        }
 
     }
 

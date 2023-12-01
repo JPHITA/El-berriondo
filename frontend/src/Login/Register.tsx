@@ -15,33 +15,38 @@ function PanRegister() {
         navigate('/Login')
     }
     function handleRegister(){
-        if (contraseña===contrasena_confirm) {
+        if (nombre==="" || apellido==="" || documento==="" || direccion==="" || correo==="" || contraseña==="" || contrasena_confirm===""){
+            alert ('ningun campo puede estar vacio, por favor introduce los datos faltantes')
+        }else {
 
-            fetchBackend("/Login/handleRegister", {
-                method: "get",
-                headers: {
-                    "content-type": "application.json"
-                },
-                body: JSON.stringify({
-                    "nombre": nombre,
-                    "apellido": apellido,
-                    "id": documento,
-                    "email": correo,
-                    "direccion": direccion,
-                    "password": contraseña
+            if (contraseña === contrasena_confirm) {
+
+                fetchBackend("/Login/handleRegister", {
+                    method: "get",
+                    headers: {
+                        "content-type": "application.json"
+                    },
+                    body: JSON.stringify({
+                        "nombre": nombre,
+                        "apellido": apellido,
+                        "id": documento,
+                        "email": correo,
+                        "direccion": direccion,
+                        "password": contraseña
+                    })
+                }).then(async (res) => {
+                    const Response = await res.text()
+                    console.log(Response)
+
+                    if (Response) {
+                        NavRegistro
+                    } else {
+                        alert("el usuario ya existe")
+                    }
                 })
-            }).then(async (res) => {
-                const Response = await res.text()
-                console.log(Response)
-
-                if (Response) {
-                    NavRegistro
-                } else {
-                    alert("el usuario ya existe")
-                }
-            })
-        }else{
-            alert("las contraseñas no coinciden")
+            } else {
+                alert("las contraseñas no coinciden")
+            }
         }
     }
 
