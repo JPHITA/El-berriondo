@@ -31,6 +31,7 @@ function RecuperarCuenta(){
                 console.log(Response)
 
                 if (Response.email === correo && Response.id === documento) {
+                    sessionStorage.setItem("usuario", Response)
                     NavNewContra
                 } else {
                     alert('no existe una cuenta con estos datos')
