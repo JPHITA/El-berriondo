@@ -71,7 +71,7 @@ class newPassword(Resource):
     def get(self):
         params = request.get_json(silent=True) or dict()
 
-        Usu = User.updateUsuarioPassword(params)
+        Usu = User.updateUsuarioPassword(params.get("password"),params.get("id"))
 
         if Usu:
             return True
