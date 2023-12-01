@@ -37,11 +37,11 @@ class User:
 
         SQL = """
         SELECT *
-        FROM usuarios 
-        WHERE nombre=Nombre;
+        FROM usuarios u
+        WHERE u.nombre=:nombre
             """
 
-        datoU = db.query(SQL, Nombre)
+        datoU = db.query(SQL, nombre=Nombre)
 
         db.close()
 
@@ -52,11 +52,11 @@ class User:
 
         SQL = """
         SELECT *
-        FROM usuarios 
-        WHERE id='Id';
+        FROM usuarios u
+        WHERE u.id=:id;
             """
 
-        UID=db.query(SQL,id)
+        UID=db.query(SQL,id=id)
 
         return UID
 
@@ -64,30 +64,30 @@ class User:
         db = Database()
         SQL = """
         SELECT *
-        FROM usuarios
-        WHERE email=Email
-        AND password=Password;
+        FROM usuarios u
+        WHERE u.email=:email
+        AND u.password=:password;
         """
-        DatoP = db.query(SQL, Email, Password)
+        DatoP = db.query(SQL, email=Email, password=Password)
 
         if DatoP.len != 0:
             return True
         else:
             return False
 
-    def updateUsuarioPassword(self,args):
+    def updateUsuarioPassword(self,args,Id):
         db=Database()
 
         SQL="""
         UPDATE usuarios
         
         SET
-            password = 'arg'
+            password =:password
         
-        WHERE id='id'       
+        WHERE id=:id      
         """
 
-        Update=db.execute(SQL,args)
+        Update=db.execute(SQL,password=args,id=Id)
 
         if Update:
             return True
