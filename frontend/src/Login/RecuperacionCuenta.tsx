@@ -20,19 +20,18 @@ function RecuperarCuenta(){
             fetchBackend('/Login/userQuery', {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application.json'
+                    'content-type': 'application/json'
                 },
                 body: JSON.stringify({
-                    'email': correo,
-                    'id': documento
+                    correo,
+                    documento
                 })
             }).then(async (res) => {
-                const Response = await res.json()
-                console.log(Response)
-
-                if (Response.email === correo && Response.id === documento) {
-                    sessionStorage.setItem("usuario", Response)
-                    NavNewContra
+                const result = await res.json()
+                
+                if (result.email === correo && result.documento === documento) {
+                    sessionStorage.setItem("usuario", JSON.stringify(result))
+                    NavNewContra()
                 } else {
                     alert('no existe una cuenta con estos datos')
                 }

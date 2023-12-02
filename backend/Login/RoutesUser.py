@@ -81,11 +81,11 @@ class userQuery(Resource):
     def post(self):
         params = request.get_json(silent=True) or dict()
 
-        Usu = User.GetUsuarioId(params.get('id'))
+        Usu = User.GetUsuarioId(params.get('documento'))
 
         if len(Usu)>0:
-            if params.get('id') == Usu[0].get('id') and params.get('correo') == Usu[0].get('email'):
-                return Usu
+            if params.get('documento') == Usu[0].get('documento') and params.get('correo') == Usu[0].get('email'):
+                return Usu[0]
             else:
                 return False
         else:

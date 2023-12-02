@@ -48,16 +48,22 @@ class User:
 
         return datoU
 
-    def GetUsuarioId(id):
+    def GetUsuarioId(documento):
         db=Database()
 
         SQL = """
-        SELECT *
+        SELECT
+            u.id,
+            u.documento,
+            u.nombre,
+            u.apellido,
+            u.email,
+            u.privilege
         FROM usuarios u
-        WHERE u.id=:id;
+        WHERE u.documento=:documento;
             """
 
-        UID=db.query(SQL,id=id)
+        UID=db.query(SQL,documento=documento)
 
         return UID
 
@@ -65,7 +71,8 @@ class User:
         db = Database()
         SQL = """
         SELECT
-            u.id, 
+            u.id,
+            u.documento,
             u.nombre,
             u.apellido,
             u.email,
