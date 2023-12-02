@@ -5,7 +5,6 @@ import { Row, Col, Button} from 'react-bootstrap';
 import Image from "react-bootstrap/Image";
 import Form from "react-bootstrap/Form";
 import {fetchBackend} from "../services/backend.ts";
-import { MockUsuarios } from '../Ventas/Mocks/MockUsuarios';
 
 function PanLogin() {
     const navigate = useNavigate();
@@ -17,23 +16,6 @@ function PanLogin() {
     const NavPanRegister = () => {
         navigate('/Register')
     }
-    function handleIniciarSesion() {
-        let usuario = MockUsuarios.find(usuario => usuario.Email === correo && usuario.Password === Password);
-
-        if (usuario === undefined) {
-            alert("Usuario o contraseña incorrectos");
-            return;
-        }
-        sessionStorage.setItem("loggedIn","")
-        sessionStorage.setItem("usuario", JSON.stringify(usuario))
-
-        if (usuario.privilege) {
-            navigate('/listadoProductos');
-        } else {
-            navigate('/Ventas/Principal');
-        }
-
-    }
 
     function handleLogin(){
         if (correo==="" || Password===""){
@@ -44,28 +26,27 @@ function PanLogin() {
             fetchBackend("/Login/handleLogin", {
                 method: "POST",
                 headers: {
-                    "content-type": "application.json"
+                    "content-type": "application/json"
                 },
                 body: JSON.stringify({
                     "email": correo,
                     "password": Password
                 })
             }).then(async (res) => {
-                    const Response = await res.json()
-                    console.log(Response)
+                    const { user_exist, user } = await res.json()
 
-                    if (Response === "None") {
-                        alert("Usuario o contraseña incorrectos")
-                    }
-                    sessionStorage.setItem("loggedIn","")
-                    sessionStorage.setItem("usuario", Response)
-                    const Userdata=JSON.parse(Response)
+                    if (user_exist) {
+                        sessionStorage.setItem("loggedIn","");
+                        sessionStorage.setItem("usuario", JSON.stringify(user));
 
-                    if (Userdata.privilege) {
-                        navigate('/listadoProductos')
+                        if (user.privilege) {
+                            navigate('/listadoProductos')
+                        } else {
+                            navigate('/Ventas/Principal')
+                        }
                     } else {
-                        navigate('/Ventas/Principal')
-                    }
+                        alert('Usuario o contraseña incorrectos')
+                    }                    
                 }
             )
         }
@@ -106,7 +87,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
+                        <Button className="login-btn" onClick={handleLogin}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>

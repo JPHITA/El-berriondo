@@ -63,21 +63,19 @@ class User:
     def loginChecker(Email, Password):
         db = Database()
         SQL = """
-        SELECT *
+        SELECT
+            u.id, 
+            u.nombre,
+            u.apellido,
+            u.email,
+            u.privilege
         FROM usuarios u
         WHERE u.email=:email
         AND u.password=:password;
         """
         DatoP = db.query(SQL, email=Email, password=Password)
 
-        if len(DatoP)>0:
-
-            if DatoP[0] == Email:
-                return DatoP
-            else:
-                return 0
-        else:
-            return 0
+        return len(DatoP) > 0, DatoP[0]
 
     def updateUsuarioPassword(self,args,Id):
         db=Database()

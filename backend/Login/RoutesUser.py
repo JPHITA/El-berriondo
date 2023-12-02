@@ -34,7 +34,6 @@ class handleRegister(Resource):
                             params['email'], params['password'])
             return "Created"
 
-
 api.add_resource(handleRegister, '/handleRegister')
 
 
@@ -56,12 +55,9 @@ class handleLogin(Resource):
         Email = params['email']
         Password = params['password']
 
-        Usu = User.loginChecker(Email, Password)
+        user_exist, user = User.loginChecker(Email, Password)
 
-        if Usu != 0:
-            return Usu
-        else:
-            return "None"
+        return {"user_exist": user_exist, "user": user}
 
 
 api.add_resource(handleLogin, '/handleLogin')
