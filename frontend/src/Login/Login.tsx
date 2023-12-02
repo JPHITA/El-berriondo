@@ -106,7 +106,7 @@ function PanLogin() {
                         <Button className="register-btn" onClick={NavPanRegister}> Registrate</Button>
                     </Col>
                     <Col className="text-center py-3">
-                        <Button className="login-btn" onClick={handleLogin}>Iniciar sesión</Button>
+                        <Button className="login-btn" onClick={handleIniciarSesion}>Iniciar sesión</Button>
                     </Col>
                 </Col>
             </Col>

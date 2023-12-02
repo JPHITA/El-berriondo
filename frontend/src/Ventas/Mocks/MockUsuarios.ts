@@ -6,12 +6,12 @@ export interface Usuarios{
 
 export const MockUsuarios: Usuarios[]= [
     {
-        Email: "admin@gmail.com",
+        Email: "admin@admin.com",
         Password: "admin",
         privilege: true,
     },
     {
-        Email: "User@gmail.com",
+        Email: "user@user.com",
         Password: "user",
         privilege: false,
     }

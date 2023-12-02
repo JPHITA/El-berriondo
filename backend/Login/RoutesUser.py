@@ -20,9 +20,9 @@ class handleRegister(Resource):
         -codigo 0: el usuario no existe (se puede hacer el registro)
         """
 
-        params = request.get_json(silent=True) or dict()
+        params = request.get_json()
 
-        Nombre = params.get("nombre")
+        Nombre = params['nombre']
 
         Usu = User.getUsuario(Nombre)
 
@@ -30,8 +30,8 @@ class handleRegister(Resource):
             # otro user con los mismos datos
             return "Exist"
         else:  # No hay user con estos datos, se procede a crearlo
-            User.setUsuario(params.get("nombre"), params.get("apellido"), params.get("id"), params.get("direccion"),
-                            params.get("email"), params.get("password"))
+            User.setUsuario(params['nombre'], params['apellido'], params['id'], params['direccion'],
+                            params['email'], params['password'])
             return "Created"
 
 
@@ -51,10 +51,10 @@ class handleLogin(Resource):
         -False: Email o password incorrectos
         -True: Los datos concuerdan, se procede al redirect
         """
-        params = request.get_json(silent=True) or dict()
+        params = request.get_json()
 
-        Email = params.get('email')
-        Password = params.get('password')
+        Email = params['email']
+        Password = params['password']
 
         Usu = User.loginChecker(Email, Password)
 
