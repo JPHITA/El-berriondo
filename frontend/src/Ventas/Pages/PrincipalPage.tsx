@@ -11,8 +11,13 @@ import { lengthCarrito } from "./../../services/carrito.ts";
 import { Producto } from "./../../types.ts";
 
 import { fetchBackend } from "./../../services/backend.ts";
+import {useNavigate} from "react-router-dom";
 
 export const PrincipalPage = () => {
+    const navigate = useNavigate();
+    if (sessionStorage.getItem("loggedIn")===null){
+        navigate('/Login')
+    }
     const [productos, setProductos] = useState<Producto[]>([]); // Lista de productos
     const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); // Lista de productos filtrados por categoría
 

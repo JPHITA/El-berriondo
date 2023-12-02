@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer, useRef } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import {useParams, useLocation, useNavigate} from 'react-router-dom';
 
 import { Header } from '../components/Header';
 import { RecomendacionProd } from "../components/RecomendacionProd.tsx";
@@ -45,6 +45,10 @@ const Dummyproducto: Producto = {
 
 
 export const DetallePage = () => {
+    const navigate = useNavigate();
+    if (sessionStorage.getItem("loggedIn")===null){
+        navigate('/Login')
+    }
     const { idProducto } = useParams(); // id del producto a mostrar
     const location = useLocation();
     const [_, forceUpdate] = useReducer(x => x + 1, 0); // para actualizar cuando se añade al carrito

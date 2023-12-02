@@ -1,15 +1,16 @@
-import { RouteObject } from "react-router-dom";
-
+import {RouteObject, Navigate} from "react-router-dom";
 import RecuperarCuenta from "./RecuperacionCuenta";
-import IntroducirCodigo from "./IntroducirCodigo";
 import NuevaContraseña from "./NuevaContraseña";
 import FinRegistro from "./FinRegistro";
 import PanLogin from "./Login";
+import PanRegister from "./Register";
 
-
+const NavPanLogin=()=>{
+    return <Navigate to={{pathname:'/Login'}}/>
+}
 export const routes: RouteObject[] = [
     {
-        path: '/',
+        path: '/Login',
         element: <PanLogin/>
     },
     {
@@ -18,15 +19,20 @@ export const routes: RouteObject[] = [
 
     },
     {
-        path:'/Introducircodigo',
-        element: <IntroducirCodigo/>
-    },
-    {
         path : '/Nuevacontraseña',
         element: <NuevaContraseña/>
     },
     {
         path:'/Finregistro',
         element: <FinRegistro/>
+    },
+    {
+        path:'/Register',
+        element: <PanRegister/>
+    },
+    {
+        path:'*',
+        element: <NavPanLogin/>
+
     }
 ]

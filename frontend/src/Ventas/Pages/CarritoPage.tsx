@@ -12,8 +12,12 @@ import { getCarrito, lengthCarrito, clearCarrito } from "./../../services/carrit
 import { fetchBackend } from '../../services/backend.ts';
 import { Producto } from "../../types.ts";
 
+
 export const CarritoPage = () => {
     const navigate = useNavigate();
+    if (sessionStorage.getItem("loggedIn")===null){
+        navigate('/Login')
+    }
 
     const [carrito, setCarrito] = useState(getCarrito()); // estado para manejar el carrito
     const [productosCarrito, setProductosCarrito] = useState<Producto[]>(); // estado para manejar los productos del carrito
