@@ -33,11 +33,18 @@ class User:
         db.commit()
         db.close()
 
-    def getUsuario(documento):
+    @classmethod
+    def getUsuario(cls, documento):
         db = Database()
 
         SQL = """
-        SELECT *
+        SELECT 
+            u.id,
+            u.documento,
+            u.nombre,
+            u.apellido,
+            u.email,
+            u.privilege
         FROM usuarios u
         WHERE u.documento=:documento;
             """
@@ -48,7 +55,8 @@ class User:
 
         return datoU
 
-    def GetUsuarioId(documento):
+    @classmethod
+    def GetUsuarioId(cls, documento):
         db=Database()
 
         SQL = """
@@ -67,7 +75,8 @@ class User:
 
         return UID
 
-    def loginChecker(Email, Password):
+    @classmethod
+    def loginChecker(cls, Email, Password):
         db = Database()
         SQL = """
         SELECT
@@ -83,21 +92,22 @@ class User:
         """
         DatoP = db.query(SQL, email=Email, password=Password)
 
-        return len(DatoP) > 0, DatoP[0]
+        return len(DatoP) > 0, DatoP
 
+    @classmethod
     def updateUsuarioPassword(self,args,Id):
         db=Database()
 
         SQL="""
         UPDATE usuarios
-        
         SET
-            password =:password
-        
+            password = :password
         WHERE id=:id      
         """
+        res = db.execute(SQL,password=args,id=Id)
+        db.commit()
 
-        if db.execute(SQL,password=args,id=Id):
+        if res.rowcount == 1:
             return "Succesful"
         else:
             return "Failed"

@@ -7,10 +7,8 @@ import {useState} from "react";
 import {fetchBackend} from "../services/backend.ts";
 
  export default function NuevaContraseña(){
-    const navigate =useNavigate();
-    var string = sessionStorage.getItem("usuario");
-    // @ts-ignore
-     var usuario= JSON.parse(string)
+    const navigate = useNavigate();
+    const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}")
 
     const NavPanLogin=() =>{
         navigate('/Login')
@@ -24,18 +22,18 @@ import {fetchBackend} from "../services/backend.ts";
                 fetchBackend('/Login/newPassword', {
                     method: 'POST',
                     headers: {
-                        "content-type": "application.json"
+                        "content-type": "application/json"
                     },
                     body: JSON.stringify({
                         "id": usuario.id,
                         "password": contraseña
                     })
                 }).then(async (res) => {
-                    const Response = await res.text()
-                    console.log(Response)
+                    const { success } = await res.json()
+                    console.log(success)
 
-                    if (Response) {
-                        NavPanLogin
+                    if (success == true) {
+                        NavPanLogin()
                     }
                 })
             } else {

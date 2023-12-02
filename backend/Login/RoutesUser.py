@@ -64,14 +64,18 @@ api.add_resource(handleLogin, '/handleLogin')
 
 class newPassword(Resource):
     def post(self):
-        params = request.get_json(silent=True) or dict()
+        try: 
+            params = request.get_json(silent=True) or dict()
 
-        Usu = User.updateUsuarioPassword(params.get("password"),params.get("id"))
+            Usu = User.updateUsuarioPassword(params.get("password"),params.get("id"))
 
-        if Usu == "Succesful":
-            return True
-        else:
-            return False
+            if Usu == "Succesful":
+                return {"success": True}, 200
+            else:
+                return {"success": False}, 400
+            
+        except Exception as e:
+            return {"success": False}, 400
 
 
 api.add_resource(newPassword, '/newPassword')
