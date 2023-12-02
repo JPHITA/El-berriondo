@@ -9,8 +9,8 @@ export const ExpandableRowVentas: React.FC<ExpandableRowVentasProps> = ({ data }
     
     return (
         <>
-            {data.nombres_productos.map((producto: string) => (
-                <h6>{producto}</h6>
+            {data.nombres_productos.map((producto: string, i: number) => (
+                <h6 key={i}>{producto}</h6>
             ))}
         </>
     );

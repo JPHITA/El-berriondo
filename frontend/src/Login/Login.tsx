@@ -34,12 +34,12 @@ function PanLogin() {
                 })
             }).then(async (res) => {
                     const { user_exist, user } = await res.json()
-
+                    
                     if (user_exist) {
                         sessionStorage.setItem("loggedIn","");
-                        sessionStorage.setItem("usuario", JSON.stringify(user));
+                        sessionStorage.setItem("usuario", JSON.stringify(user[0]));
 
-                        if (user.privilege) {
+                        if (user[0].privilege) {
                             navigate('/listadoProductos')
                         } else {
                             navigate('/Ventas/Principal')

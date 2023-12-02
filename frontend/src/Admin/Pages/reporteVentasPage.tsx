@@ -59,7 +59,6 @@ export const ReporteVentasPage = () => {
             },
         }).then(async (response) => {
             const res = await response.json();
-            console.log(res);
 
             if (res.success) getVentas();
         });
