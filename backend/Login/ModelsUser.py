@@ -5,6 +5,7 @@ from sqlalchemy import table, column
 class User:
     usuarios = table("usuarios",
                      column("id"),
+                     column("documento"),
                      column("nombre"),
                      column('apellido'),
                      column("email"),
@@ -15,16 +16,16 @@ class User:
                      )
 
     @classmethod
-    def setUsuario(cls, Nombre, Apellido, Documento, Direccion, Email, Password):
+    def setUsuario(cls, nombre, apellido, documento, direccion, correo, contraseña):
         db = Database()
 
         NewUsuario = db.insert(cls.usuarios, return_id=False,
-                               id=Documento,
-                               nombre=Nombre,
-                               apellido=Apellido,
-                               email=Email,
-                               direccion=Direccion,
-                               password=Password,
+                               documento=documento,
+                               nombre=nombre,
+                               apellido=apellido,
+                               email=correo,
+                               direccion=direccion,
+                               password=contraseña,
                                fecha_registro="NOW()",
                                privilege=False
                                )
@@ -32,16 +33,16 @@ class User:
         db.commit()
         db.close()
 
-    def getUsuario(Nombre):
+    def getUsuario(documento):
         db = Database()
 
         SQL = """
         SELECT *
         FROM usuarios u
-        WHERE u.nombre=:nombre
+        WHERE u.documento=:documento;
             """
 
-        datoU = db.query(SQL, nombre=Nombre)
+        datoU = db.query(SQL, documento=documento)
 
         db.close()
 

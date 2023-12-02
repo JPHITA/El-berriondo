@@ -1,6 +1,6 @@
-INSERT INTO usuarios (nombre, apellido, email, password, fecha_registro, privilege) VALUES
-('Don', 'Berriondo', 'admin@admin.com', 'admin', NOW(), True),
-('Juan', 'Perez', 'user@user.com', 'user', NOW(), FALSE);
+INSERT INTO usuarios (documento, nombre, apellido, email, password, fecha_registro, privilege) VALUES
+(123, 'Don', 'Berriondo', 'admin@admin.com', 'admin', NOW(), True),
+(321, 'Juan', 'Perez', 'user@user.com', 'user', NOW(), FALSE);
 
 
 INSERT INTO categorias (nombre, fecha_registro) VALUES

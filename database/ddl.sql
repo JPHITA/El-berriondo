@@ -3,6 +3,7 @@
 -- tabla usuarios
 CREATE TABLE IF NOT EXISTS usuarios (
     id SERIAL PRIMARY KEY,
+    documento VARCHAR(20),
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     email VARCHAR(50),

@@ -24,23 +24,23 @@ function PanRegister() {
                 fetchBackend("/Login/handleRegister", {
                     method: "POST",
                     headers: {
-                        "content-type": "application.json"
+                        "content-type": "application/json"
                     },
                     body: JSON.stringify({
-                        "nombre": nombre,
-                        "apellido": apellido,
-                        "id": documento,
-                        "email": correo,
-                        "direccion": direccion,
-                        "password": contraseña
+                        nombre,
+                        apellido,
+                        documento,
+                        correo,
+                        direccion,
+                        contraseña
                     })
                 }).then(async (res) => {
-                    const Response = await res.json()
+                    const { status } = await res.json()
+                    
+                    if (status==="created") {
+                        NavRegistro()
 
-                    if (Response==="Created") {
-                        NavRegistro
-
-                    } else if (Response==="Exist") {
+                    } else if (status==="exist") {
                         alert("el usuario ya existe")
                     }
                 })
@@ -80,7 +80,7 @@ function PanRegister() {
                             <label htmlFor="apellido">Apellido</label>
                         </Form>
                         <Form className="form-floating mb-1">
-                            <input type="text" className="form-control" id="documento" placeholder="Tu numero de documento" onChange={(e)=> setDocumento(e.target.value)}/>
+                            <input type="number" className="form-control" id="documento" placeholder="Tu numero de documento" onChange={(e)=> setDocumento(e.target.value)}/>
                             <label htmlFor="documento">Documento</label>
                         </Form>
                         <Form className="form-floating mb-1">

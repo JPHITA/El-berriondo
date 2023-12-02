@@ -22,17 +22,16 @@ class handleRegister(Resource):
 
         params = request.get_json()
 
-        Nombre = params['nombre']
+        documento = params['documento']
 
-        Usu = User.getUsuario(Nombre)
+        Usu = User.getUsuario(documento)
 
         if len(Usu) != 0:  # Si la lista no es vacia, significa que el usuario ya existe en la BD / no se puede crear
             # otro user con los mismos datos
-            return "Exist"
+            return {"status": "exist"}, 200
         else:  # No hay user con estos datos, se procede a crearlo
-            User.setUsuario(params['nombre'], params['apellido'], params['id'], params['direccion'],
-                            params['email'], params['password'])
-            return "Created"
+            User.setUsuario(**params)
+            return {"status": "created"}, 200
 
 api.add_resource(handleRegister, '/handleRegister')
 
